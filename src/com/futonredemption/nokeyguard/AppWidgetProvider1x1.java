@@ -10,21 +10,10 @@ import android.widget.RemoteViews;
 
 public class AppWidgetProvider1x1 extends AppWidgetProvider
 {
-	private void Log(String message)
-	{
-		if (message == null)
-		{
-			message = "[null]";
-		}
-		android.util.Log.w("AntiKeyguard", message);
-	}
-	
 	public void onReceive(Context context, Intent intent)
 	{
 		// Handle the basic AppWidget intents.
 		super.onReceive(context, intent);
-		
-		Log(intent.getAction());
 		
 		// Handle possible system sent intents as well.
 		final String action = intent.getAction();
@@ -40,6 +29,18 @@ public class AppWidgetProvider1x1 extends AppWidgetProvider
 		{
 			refreshWidgets(context);
 		}
+		else if(Intent.ACTION_CAMERA_BUTTON.equals(action))
+		{
+			forceUnlock(context);
+		}
+		else if(Intent.ACTION_POWER_DISCONNECTED.equals(action))
+		{
+			refreshWidgets(context);
+		}
+		else if(Intent.ACTION_POWER_CONNECTED.equals(action))
+		{
+			refreshWidgets(context);
+		}
 	}
 	
 	@Override
@@ -49,17 +50,23 @@ public class AppWidgetProvider1x1 extends AppWidgetProvider
 		refreshWidgets(context);
 	}
 	
+	private void forceUnlock(final Context context)
+	{
+		context.startService(Intents.disableKeyguard(context));
+	}
+	
 	private void refreshWidgets(final Context context)
 	{
 		context.startService(Intents.refreshWidgets(context));
 	}
+	
 	@Override
 	public void onDisabled(Context context)
 	{
 		context.startService(Intents.enableKeyguard(context));
 	}
 	
-	public static void UpdateAllWidgets(final Context context, final boolean is_keyguardactive)
+	public static void UpdateAllWidgets(final Context context, final int widgetState, final boolean isLockscreenEnabled)
 	{
 		int i, len;
 		final AppWidgetManager widget_manager = AppWidgetManager.getInstance(context);
@@ -68,11 +75,11 @@ public class AppWidgetProvider1x1 extends AppWidgetProvider
 		len = ids1x1.length;
 		for(i = 0; i < len; i++)
 		{
-			AppWidgetProvider1x1.UpdateWidget(context, widget_manager, ids1x1[i], is_keyguardactive);
+			AppWidgetProvider1x1.UpdateWidget(context, widget_manager, ids1x1[i], widgetState, isLockscreenEnabled);
 		}
 	}
 
-	public static void UpdateWidget(Context context, AppWidgetManager widgetManager, int widget_id, boolean is_keyguardactive)
+	public static void UpdateWidget(final Context context, final AppWidgetManager widgetManager, final int widget_id, final int widgetState, final boolean isLockscreenEnabled)
 	{
 		RemoteViews views = null;
 		
@@ -82,16 +89,29 @@ public class AppWidgetProvider1x1 extends AppWidgetProvider
 		int iconId = 0;
 		int indicatorId = 0;
 		
-		if(is_keyguardactive)
+		// Widget Click Intent Cycle: Disable -> Disable on Charging -> Enable
+		if(widgetState == Constants.KEYGUARD_Disabled)
+		{
+			intent = Intents.disableKeyguardOnCharging(context);
+			indicatorId = R.drawable.appwidget_settings_ind_off_single;
+		}
+		else if(widgetState == Constants.KEYGUARD_DisableOnCharging)
+		{
+			intent = Intents.enableKeyguard(context);
+			indicatorId = R.drawable.appwidget_settings_ind_mid_single;
+		}
+		else
 		{
 			intent = Intents.disableKeyguard(context);
 			indicatorId = R.drawable.appwidget_settings_ind_on_single;
+		}
+		
+		if(isLockscreenEnabled)
+		{
 			iconId = R.drawable.ic_appwidget_screenlock_on;
 		}
 		else
 		{
-			intent = Intents.enableKeyguard(context);
-			indicatorId = R.drawable.appwidget_settings_ind_off_single;
 			iconId = R.drawable.ic_appwidget_screenlock_off;
 		}
 		
