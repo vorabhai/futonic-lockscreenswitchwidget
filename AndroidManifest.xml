@@ -14,7 +14,8 @@
 			<meta-data android:name="android.appwidget.provider"
 				android:resource="@xml/appwidget_1x1" />
 		</receiver>
-		<service android:exported="true" android:name=".DisableKeyguardService" android:label="@string/service_name" />
+		<service android:exported="true" android:name=".DisableKeyguardService"
+					android:label="@string/service_name" android:enabled="true" />
 	</application>
 	<uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
 	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />

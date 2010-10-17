@@ -121,10 +121,15 @@ public class DisableKeyguardService extends Service
 	}
 
 
+	private void Log(String message)
+	{
+		android.util.Log.w("KGS", message);
+	}
 	@Override
 	public void onDestroy()
 	{
 		super.onDestroy();
+		Log("!!!OnDestroy");
 		destroyKeyguardLock();
 	}
 	
@@ -132,6 +137,7 @@ public class DisableKeyguardService extends Service
 	public void onLowMemory()
 	{
 		super.onLowMemory();
+		Log("!!!On Low Memory");
 		// Really, really hope that nothing bad happens.
 	}
 	
@@ -217,7 +223,8 @@ public class DisableKeyguardService extends Service
 		boolean actionPerformed = disableKeyguard();
 		if(actionPerformed)
 		{
-			showLockscreenStateMessage(R.string.off);
+			final int mode = getKeyguardEnabledPreference();
+			showLockscreenStateMessage(false, mode);
 		}
 	}
 	
@@ -226,7 +233,8 @@ public class DisableKeyguardService extends Service
 		boolean actionPerformed = enableKeyguard();
 		if(actionPerformed)
 		{
-			showLockscreenStateMessage(R.string.on);
+			final int mode = getKeyguardEnabledPreference();
+			showLockscreenStateMessage(true, mode);
 		}
 	}
 	
@@ -271,35 +279,44 @@ public class DisableKeyguardService extends Service
 		updateAllWidgets();
 	}
 	
-	private void showLockscreenStateMessage(int modeResId)
+	private void showLockscreenStateMessage(boolean isLockscreenEnabled, int mode)
 	{
 		final Resources res = this.getResources();
 		int highlightColor;
 		String colorHexCode;
+		int toggleResId;
 		
-		if(modeResId == R.string.on)
-		{ 
+		if(isLockscreenEnabled == true)
+		{
+			toggleResId = R.string.on;
 			highlightColor = res.getColor(R.color.green);
 		}
 		else
 		{
+			toggleResId = R.string.off;
 			highlightColor = res.getColor(R.color.red);
 		}
 		
 		colorHexCode = Integer.toHexString(highlightColor);
 		
 		String baseMessage = this.getString(R.string.lockscreen_is);
-		String mode = this.getString(modeResId);
+		String toggleDescription = this.getString(toggleResId);
 		StringBuilder sb = new StringBuilder();
 		sb.append(baseMessage);
 		
 		sb.append(" <b><font color=\"#");
 		sb.append(colorHexCode);
 		sb.append("\">");
-		sb.append(mode.toUpperCase());
+		sb.append(toggleDescription.toUpperCase());
 		sb.append("</font></b>");
-		
 		sb.append(".");
+		
+		if(mode == Constants.KEYGUARD_DisableOnCharging)
+		{
+			sb.append("<br /><i>");
+			sb.append(getString(R.string.lock_screen_is_disabled_while_charging));
+			sb.append("</i>");
+		}
 		
 		Toast.makeText(this, Html.fromHtml(sb.toString()), Toast.LENGTH_LONG).show();
 	}
