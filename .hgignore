@@ -1,0 +1,11 @@
+syntax: glob
+*.class
+*.suo
+*.apk
+
+syntax: regexp
+bin\\*
+gen\\*
+log\\*
+.svn\\*
+.metadata\\*
