@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/main" android:layout_width="fill_parent"
+	android:layout_height="fill_parent" android:gravity="center"
+	android:background="@drawable/appwidget_bg">
+
+	<LinearLayout android:id="@+id/btnKeyguard"
+		android:layout_width="0dip" android:layout_weight="1"
+		android:layout_height="fill_parent" android:background="@drawable/appwidget_button_single"
+		android:clickable="true" android:focusable="true" android:orientation="vertical">
+
+		<ImageView android:id="@+id/imgKeyguard"
+			android:layout_width="fill_parent" android:layout_height="0dip"
+			android:layout_weight="1" android:scaleType="center" />
+
+		<ImageView android:id="@+id/indKeyguard"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:scaleType="fitXY" />
+	</LinearLayout>
+</LinearLayout>
