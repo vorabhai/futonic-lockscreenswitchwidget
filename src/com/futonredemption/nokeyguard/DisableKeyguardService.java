@@ -6,15 +6,17 @@ import android.app.KeyguardManager.KeyguardLock;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
+import android.text.Html;
+import android.widget.Toast;
 public class DisableKeyguardService extends Service
 {
 	private static final String KeyGuardTag = "DisableKeyguardService";
 	private KeyguardManager _guard = null;
 	private KeyguardLock _lock = null;
 	private Object _synclock = new Object();
-	//private boolean _isKeyguardEnabled = true;
 	
 	public static final String EXTRA_RemoteAction = "EXTRA_RemoteAction";
 	public static final String RemoteAction_EnableKeyguard = "RemoteAction_EnableKeyguard";
@@ -22,9 +24,7 @@ public class DisableKeyguardService extends Service
 	public static final String RemoteAction_RefreshWidgets = "RemoteAction_RefreshWidgets";
 	
 	public static final String Preference_KeyguardToggle = "Preference_KeyguardToggle";
-	
-	//private static final String TAG = "DKS";
-	
+
 	@Override
 	public void onCreate()
 	{
@@ -129,6 +129,7 @@ public class DisableKeyguardService extends Service
 		setKeyguardTogglePreference(true);
 		synchronized(_synclock)
 		{
+			showLockscreenStateMessage(R.string.on);
 			reenableKeyguard();
 		}
 		
@@ -140,11 +141,45 @@ public class DisableKeyguardService extends Service
 	{
 		synchronized(_synclock)
 		{
+			showLockscreenStateMessage(R.string.off);
 			maybeCreateKeyguardLock();
 			_lock.disableKeyguard();
 		}
 	}
 	
+	private void showLockscreenStateMessage(int modeResId)
+	{
+		final Resources res = this.getResources();
+		int highlightColor;
+		String colorHexCode;
+		
+		if(modeResId == R.string.on)
+		{ 
+			highlightColor = res.getColor(R.color.green);
+		}
+		else
+		{
+			highlightColor = res.getColor(R.color.red);
+		}
+		
+		colorHexCode = Integer.toHexString(highlightColor);
+		
+		String baseMessage = this.getString(R.string.lockscreen_is);
+		String mode = this.getString(modeResId);
+		StringBuilder sb = new StringBuilder();
+		sb.append(baseMessage);
+		
+		sb.append(" <b><font color=\"#");
+		sb.append(colorHexCode);
+		sb.append("\">");
+		sb.append(mode.toUpperCase());
+		sb.append("</font></b>");
+		
+		sb.append(".");
+		
+		Toast.makeText(this, Html.fromHtml(sb.toString()), Toast.LENGTH_LONG).show();
+	}
+
 	private void reenableKeyguard()
 	{
 		if(_lock != null)

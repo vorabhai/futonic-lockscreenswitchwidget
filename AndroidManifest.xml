@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="com.futonredemption.nokeyguard" android:versionCode="6" android:versionName="1.5">
-	<application android:icon="@drawable/icon" android:label="@string/app_name" android:debuggable="false">
+	package="com.futonredemption.nokeyguard" android:versionCode="20" android:versionName="2.0">
+	<application android:icon="@drawable/icon" android:label="@string/app_name" android:debuggable="true">
 		<receiver android:name=".AppWidgetProvider1x1" android:label="@string/widget_label_1x1"
 			android:enabled="true" android:exported="true">
 			<intent-filter>
 				<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+				<action android:name="android.intent.action.SCREEN_OFF" />
+				<action android:name="android.intent.action.SCREEN_ON" />
+				<action android:name="android.intent.action.BOOT_COMPLETED" />
 			</intent-filter>
 			<meta-data android:name="android.appwidget.provider"
 				android:resource="@xml/appwidget_1x1" />
 		</receiver>
-		<service android:exported="true" android:name=".DisableKeyguardService"></service>
+		<service android:exported="true" android:name=".DisableKeyguardService" android:label="@string/service_name" />
 	</application>
-	<uses-permission android:name="android.permission.DISABLE_KEYGUARD"></uses-permission>
-	<uses-sdk android:minSdkVersion="3"></uses-sdk>
+	<uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+	<uses-sdk android:minSdkVersion="3" />
 </manifest>

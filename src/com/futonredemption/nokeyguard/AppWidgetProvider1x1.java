@@ -10,13 +10,49 @@ import android.widget.RemoteViews;
 
 public class AppWidgetProvider1x1 extends AppWidgetProvider
 {
+	private void Log(String message)
+	{
+		if (message == null)
+		{
+			message = "[null]";
+		}
+		android.util.Log.w("AntiKeyguard", message);
+	}
+	
+	public void onReceive(Context context, Intent intent)
+	{
+		// Handle the basic AppWidget intents.
+		super.onReceive(context, intent);
+		
+		Log(intent.getAction());
+		
+		// Handle possible system sent intents as well.
+		final String action = intent.getAction();
+		if(Intent.ACTION_BOOT_COMPLETED.equals(action))
+		{
+			refreshWidgets(context);
+		}
+		else if(Intent.ACTION_SCREEN_OFF.equals(action))
+		{
+			refreshWidgets(context);
+		}
+		else if(Intent.ACTION_SCREEN_ON.equals(action))
+		{
+			refreshWidgets(context);
+		}
+	}
+	
 	@Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds)
 	{
 		super.onUpdate(context, appWidgetManager, appWidgetIds);
-		context.startService(Intents.refreshWidgets(context));
+		refreshWidgets(context);
 	}
 	
+	private void refreshWidgets(final Context context)
+	{
+		context.startService(Intents.refreshWidgets(context));
+	}
 	@Override
 	public void onDisabled(Context context)
 	{

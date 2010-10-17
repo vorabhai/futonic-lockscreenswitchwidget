@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Lock Screen Switch</string>
-    <string name="enable_keyguard">Enable Keyguard</string>
-    <string name="disable_keyguard">Disable Keyguard</string>
     <string name="widget_label_1x1">Lock Screen Switch</string>
+    <string name="service_name">Lock Screen Disable</string>
+    <string name="lockscreen_is">Lock Screen is</string>
+    <string name="off">off</string>
+    <string name="on">on</string>
 </resources>
