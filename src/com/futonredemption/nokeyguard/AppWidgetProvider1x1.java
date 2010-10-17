@@ -17,21 +17,13 @@ public class AppWidgetProvider1x1 extends AppWidgetProvider
 		
 		// Handle possible system sent intents as well.
 		final String action = intent.getAction();
-		if(Intent.ACTION_BOOT_COMPLETED.equals(action))
-		{
-			refreshWidgets(context);
-		}
-		else if(Intent.ACTION_SCREEN_OFF.equals(action))
+		if(Intent.ACTION_SCREEN_OFF.equals(action))
 		{
 			refreshWidgets(context);
 		}
 		else if(Intent.ACTION_SCREEN_ON.equals(action))
 		{
 			refreshWidgets(context);
-		}
-		else if(Intent.ACTION_CAMERA_BUTTON.equals(action))
-		{
-			forceUnlock(context);
 		}
 		else if(Intent.ACTION_POWER_DISCONNECTED.equals(action))
 		{
@@ -48,11 +40,6 @@ public class AppWidgetProvider1x1 extends AppWidgetProvider
 	{
 		super.onUpdate(context, appWidgetManager, appWidgetIds);
 		refreshWidgets(context);
-	}
-	
-	private void forceUnlock(final Context context)
-	{
-		context.startService(Intents.disableKeyguard(context));
 	}
 	
 	private void refreshWidgets(final Context context)
