@@ -20,12 +20,14 @@ public class DisableKeyguardService extends Service
 	private Object _synclock = new Object();
 	private boolean _isDisposed = false;
 	private boolean _allowingKeyguard = true;
-	
-	public static final String EXTRA_RemoteAction = "EXTRA_RemoteAction";
+
 	public static final String RemoteAction_EnableKeyguard = "RemoteAction_EnableKeyguard";
 	public static final String RemoteAction_DisableKeyguard = "RemoteAction_DisableKeyguard";
 	public static final String RemoteAction_DisableKeyguardOnCharging = "RemoteAction_DisableKeyguardOnCharging";
 	public static final String RemoteAction_RefreshWidgets = "RemoteAction_RefreshWidgets";
+	public static final String EXTRA_RemoteAction = "EXTRA_RemoteAction";
+	public static final String EXTRA_ForceNotify = "EXTRA_ForceNotify";
+	
 	
 	@Override
 	public void onCreate()
@@ -186,7 +188,7 @@ public class DisableKeyguardService extends Service
 		}
 	}
 	
-	private void updateAllWidgets()
+	private void updateAllWidgets(boolean notifyUser)
 	{
 		boolean isLockscreenEnabled = true;
 		
@@ -195,48 +197,64 @@ public class DisableKeyguardService extends Service
 		if(lockscreenPreference == Constants.KEYGUARD_Disabled)
 		{
 			isLockscreenEnabled = false;
-			disableLockscreen();
+			disableLockscreen(notifyUser);
 		}
 		else if(lockscreenPreference == Constants.KEYGUARD_DisableOnCharging)
 		{
 			if(isSystemCharging())
 			{
 				isLockscreenEnabled = false;
-				disableLockscreen();
+				disableLockscreen(notifyUser);
 			}
 			else
 			{
-				enableLockscreen();
+				enableLockscreen(notifyUser);
 			}
 		}
 		else if(lockscreenPreference == Constants.KEYGUARD_Enabled)
 		{
 			isLockscreenEnabled = true;
-			enableLockscreen();
+			enableLockscreen(notifyUser);
 		}
 		
 		AppWidgetProvider1x1.UpdateAllWidgets(this, lockscreenPreference, isLockscreenEnabled);
 	}
 	
-	private void disableLockscreen()
+	private void disableLockscreen(boolean notifyUser)
 	{
-		boolean actionPerformed = disableKeyguard();
+		setLockscreenMode(false, notifyUser);
+	}
+	
+	private void enableLockscreen(boolean notifyUser)
+	{
+		setLockscreenMode(true, notifyUser);
+	}
+	
+	private void setLockscreenMode(boolean enableLockscreen, boolean forceNotifyUser)
+	{
+		boolean actionPerformed;
+		
+		if(enableLockscreen)
+		{
+			actionPerformed = enableKeyguard();
+		}
+		else
+		{
+			actionPerformed = disableKeyguard();
+		}
+		
+		final int mode = getKeyguardEnabledPreference();
 		if(actionPerformed)
 		{
-			final int mode = getKeyguardEnabledPreference();
-			showLockscreenStateMessage(false, mode);
+			forceNotifyUser = true;
+		}
+		
+		if(forceNotifyUser)
+		{
+			showLockscreenStateMessage(enableLockscreen, mode);
 		}
 	}
 	
-	private void enableLockscreen()
-	{
-		boolean actionPerformed = enableKeyguard();
-		if(actionPerformed)
-		{
-			final int mode = getKeyguardEnabledPreference();
-			showLockscreenStateMessage(true, mode);
-		}
-	}
 	
 	private boolean isSystemCharging()
 	{
@@ -257,26 +275,26 @@ public class DisableKeyguardService extends Service
 	
 	private void onRefreshWidgets()
 	{
-		updateAllWidgets();
+		updateAllWidgets(false);
 	}
 
 	private void onDisableKeyguard()
 	{
 		setKeyguardTogglePreference(Constants.KEYGUARD_Disabled);
-		updateAllWidgets();
+		updateAllWidgets(true);
 	}
 	
 	private void onEnableKeyguard()
 	{
 		setKeyguardTogglePreference(Constants.KEYGUARD_Enabled);
-		updateAllWidgets();
+		updateAllWidgets(true);
 		this.stopSelf();
 	}
 	
 	private void onDisableKeyguardOnCharging()
 	{
 		setKeyguardTogglePreference(Constants.KEYGUARD_DisableOnCharging);
-		updateAllWidgets();
+		updateAllWidgets(true);
 	}
 	
 	private void showLockscreenStateMessage(boolean isLockscreenEnabled, int mode)

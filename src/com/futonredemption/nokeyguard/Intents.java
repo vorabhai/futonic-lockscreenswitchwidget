@@ -10,6 +10,7 @@ public class Intents
 	{
 		final Intent result = new Intent(context, DisableKeyguardService.class);
 		result.putExtra(DisableKeyguardService.EXTRA_RemoteAction, DisableKeyguardService.RemoteAction_DisableKeyguard);
+		result.putExtra(DisableKeyguardService.EXTRA_ForceNotify, true);
 		
 		return result;
 	}
@@ -18,7 +19,7 @@ public class Intents
 	{
 		final Intent result = new Intent(context, DisableKeyguardService.class);
 		result.putExtra(DisableKeyguardService.EXTRA_RemoteAction, DisableKeyguardService.RemoteAction_EnableKeyguard);
-		
+		result.putExtra(DisableKeyguardService.EXTRA_ForceNotify, true);
 		return result;
 	}
 	
@@ -26,6 +27,7 @@ public class Intents
 	{
 		final Intent result = new Intent(context, DisableKeyguardService.class);
 		result.putExtra(DisableKeyguardService.EXTRA_RemoteAction, DisableKeyguardService.RemoteAction_DisableKeyguardOnCharging);
+		result.putExtra(DisableKeyguardService.EXTRA_ForceNotify, true);
 		
 		return result;
 	}
@@ -34,7 +36,7 @@ public class Intents
 	{
 		final Intent result = new Intent(context, DisableKeyguardService.class);
 		result.putExtra(DisableKeyguardService.EXTRA_RemoteAction, DisableKeyguardService.RemoteAction_RefreshWidgets);
-		
+		result.putExtra(DisableKeyguardService.EXTRA_ForceNotify, false);
 		return result;
 	}
 	
