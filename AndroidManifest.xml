@@ -18,6 +18,5 @@
 					android:label="@string/service_name" android:enabled="true" />
 	</application>
 	<uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
-	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 	<uses-sdk android:minSdkVersion="3" />
 </manifest>
