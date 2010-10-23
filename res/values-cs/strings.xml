@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">Zámek obrazovky Switch</string>
+  <string name="widget_label_1x1">Zámek obrazovky Switch</string>
+  <string name="service_name">Zámek obrazovky vypnout</string>
+  <string name="lockscreen_is">Zámek obrazovky je</string>
+  <string name="off">vypnutí</string>
+  <string name="on">na</string>
+  <string name="lock_screen_is_disabled_while_charging">Automatické vypnutí při nabíjení.</string>
+</resources>

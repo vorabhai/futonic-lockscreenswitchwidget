@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">החלפת מסך נעילה</string>
+  <string name="widget_label_1x1">החלפת מסך נעילה</string>
+  <string name="service_name">בטל את נעילת מסך</string>
+  <string name="lockscreen_is">הוא נעילת מסך</string>
+  <string name="off">ביטול</string>
+  <string name="on">ב</string>
+  <string name="lock_screen_is_disabled_while_charging">אוטומטי הפוך תוך חיוב.</string>
+</resources>

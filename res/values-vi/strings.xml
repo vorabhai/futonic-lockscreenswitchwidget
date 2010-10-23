@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">Khóa Screen Switch</string>
+  <string name="widget_label_1x1">Khóa Screen Switch</string>
+  <string name="service_name">Vô hiệu hoá màn hình khóa</string>
+  <string name="lockscreen_is">Khóa Screen là</string>
+  <string name="off">tắt</string>
+  <string name="on">ngày</string>
+  <string name="lock_screen_is_disabled_while_charging">Tự động tắt trong khi sạc.</string>
+</resources>

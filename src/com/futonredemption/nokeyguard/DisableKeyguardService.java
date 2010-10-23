@@ -12,6 +12,7 @@ import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.text.Html;
 import android.widget.Toast;
+
 public class DisableKeyguardService extends Service
 {
 	private static final String KeyGuardTag = "DisableKeyguardService";
@@ -122,16 +123,10 @@ public class DisableKeyguardService extends Service
 		return performedLock;
 	}
 
-
-	private void Log(String message)
-	{
-		android.util.Log.w("KGS", message);
-	}
 	@Override
 	public void onDestroy()
 	{
 		super.onDestroy();
-		Log("!!!OnDestroy");
 		destroyKeyguardLock();
 	}
 	
@@ -139,7 +134,6 @@ public class DisableKeyguardService extends Service
 	public void onLowMemory()
 	{
 		super.onLowMemory();
-		Log("!!!On Low Memory");
 		// Really, really hope that nothing bad happens.
 	}
 	
@@ -320,6 +314,7 @@ public class DisableKeyguardService extends Service
 		String baseMessage = this.getString(R.string.lockscreen_is);
 		String toggleDescription = this.getString(toggleResId);
 		StringBuilder sb = new StringBuilder();
+		sb.append("<center>");
 		sb.append(baseMessage);
 		
 		sb.append(" <b><font color=\"#");
@@ -336,6 +331,7 @@ public class DisableKeyguardService extends Service
 			sb.append("</i>");
 		}
 		
+		sb.append("</center>");
 		Toast.makeText(this, Html.fromHtml(sb.toString()), Toast.LENGTH_LONG).show();
 	}
 

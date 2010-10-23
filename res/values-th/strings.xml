@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">สลับหน้าจอล็อก</string>
+  <string name="widget_label_1x1">สลับหน้าจอล็อก</string>
+  <string name="service_name">ปิดการใช้งานหน้าจอล็อก</string>
+  <string name="lockscreen_is">ล็อกหน้าจอเป็น</string>
+  <string name="off">ปิด</string>
+  <string name="on">บน</string>
+  <string name="lock_screen_is_disabled_while_charging">ปิดการใช้ auto-งานในขณะที่ชาร์จไฟ</string>
+</resources>

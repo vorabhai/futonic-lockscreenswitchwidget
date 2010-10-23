@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">Zablokuj ekran Switch</string>
+  <string name="widget_label_1x1">Zablokuj ekran Switch</string>
+  <string name="service_name">Wyłącz ekran blokady</string>
+  <string name="lockscreen_is">Zablokuj ekran jest</string>
+  <string name="off">wyłączanie</string>
+  <string name="on">na</string>
+  <string name="lock_screen_is_disabled_while_charging">Auto Wyłącz podczas ładowania.</string>
+</resources>

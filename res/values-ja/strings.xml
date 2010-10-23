@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">ロック画面切り替え</string>
+  <string name="widget_label_1x1">ロック画面切り替え</string>
+  <string name="service_name">ロックの画面に無効にします。</string>
+  <string name="lockscreen_is">ロック画面です。</string>
+  <string name="off">オフ</string>
+  <string name="on">上</string>
+  <string name="lock_screen_is_disabled_while_charging">自動が無効な充電中。</string>
+</resources>

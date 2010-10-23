@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">Переключення блокування екрану</string>
+  <string name="widget_label_1x1">Переключення блокування екрану</string>
+  <string name="service_name">Вимкнути блокування екрану</string>
+  <string name="lockscreen_is">Блокування екрану є</string>
+  <string name="off">Вимкнення</string>
+  <string name="on">на</string>
+  <string name="lock_screen_is_disabled_while_charging">Авто відключення під час зарядки.</string>
+</resources>

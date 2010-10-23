@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">Lukusta täisekraani Switch</string>
+  <string name="widget_label_1x1">Lukusta täisekraani Switch</string>
+  <string name="service_name">Lukusta täisekraani keelamine</string>
+  <string name="lockscreen_is">Lukusta täisekraani on</string>
+  <string name="off">välja</string>
+  <string name="on">kohta</string>
+  <string name="lock_screen_is_disabled_while_charging">Automaatne-keelake laadimise ajal.</string>
+</resources>

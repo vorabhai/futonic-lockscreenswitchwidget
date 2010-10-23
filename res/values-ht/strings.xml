@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">Fèmen a kle ekran chanjman</string>
+  <string name="widget_label_1x1">Fèmen a kle ekran chanjman</string>
+  <string name="service_name">Fèmen a kle ekran Disable</string>
+  <string name="lockscreen_is">Fèmen a kle ekran se</string>
+  <string name="off">pi mal an pi</string>
+  <string name="on">sou</string>
+  <string name="lock_screen_is_disabled_while_charging">Oto-désactiver pandan chaje.</string>
+</resources>

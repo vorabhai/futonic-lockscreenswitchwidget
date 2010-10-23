@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">Spynos ekrano Perjungti</string>
+  <string name="widget_label_1x1">Spynos ekrano Perjungti</string>
+  <string name="service_name">Spynos ekrano išjungti</string>
+  <string name="lockscreen_is">Spynos ekrano yra</string>
+  <string name="off">išjungti</string>
+  <string name="on">dėl</string>
+  <string name="lock_screen_is_disabled_while_charging">Automatinis išjungimas o apmokestinimo.</string>
+</resources>

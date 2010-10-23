@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">Zár képernyő Switch</string>
+  <string name="widget_label_1x1">Zár képernyő Switch</string>
+  <string name="service_name">Zár-képernyő letiltása</string>
+  <string name="lockscreen_is">Zár képernyő van</string>
+  <string name="off">kikapcsolása</string>
+  <string name="on">a</string>
+  <string name="lock_screen_is_disabled_while_charging">Automatikus letiltása a töltés közben.</string>
+</resources>

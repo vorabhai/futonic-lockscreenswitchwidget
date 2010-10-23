@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">Blocco dello schermo switch</string>
+  <string name="widget_label_1x1">Blocco dello schermo switch</string>
+  <string name="service_name">Blocco dello schermo disattiva</string>
+  <string name="lockscreen_is">Blocco dello schermo è</string>
+  <string name="off">largo</string>
+  <string name="on">su</string>
+  <string name="lock_screen_is_disabled_while_charging">Disabilitazione automatica durante la ricarica.</string>
+</resources>

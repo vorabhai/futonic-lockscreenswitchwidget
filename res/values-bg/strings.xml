@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">Ключ за заключване на екрана</string>
+  <string name="widget_label_1x1">Ключ за заключване на екрана</string>
+  <string name="service_name">Забрани за заключване на екрана</string>
+  <string name="lockscreen_is">Заключване на екрана е</string>
+  <string name="off">изключване</string>
+  <string name="on">относно</string>
+  <string name="lock_screen_is_disabled_while_charging">Авто-забрани при зареждане.</string>
+</resources>

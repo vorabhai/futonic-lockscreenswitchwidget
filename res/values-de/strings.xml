@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="service_name">Lock Screen Deaktivieren</string>
+  <string name="off">Off</string>
+  <string name="on">auf</string>
+  <string name="lock_screen_is_disabled_while_charging">Deaktivieren Sie Auto-während des Ladevorgangs.</string>
+</resources>
