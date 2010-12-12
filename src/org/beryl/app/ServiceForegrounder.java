@@ -15,20 +15,22 @@ import android.app.Service;
  */
 public class ServiceForegrounder {
 	
+	private final IServiceForegrounder foregrounderProxy;
 	private final Service _service;
-	private NotificationManager _notificationManager = null;
+	
 	private int _notificationId = -1;
 	
 	public ServiceForegrounder(final Service service) {
 		_service = service;
+		
+		if(AndroidVersion.isEclairOrHigher()) {
+			foregrounderProxy = new EclairOrHigherServiceForegrounder();
+		}
+		else {
+			foregrounderProxy = new DonutAndBelowServiceForegrounder();
+		}
 	}
 
-	private NotificationManager getNotificationManager() {
-		if(_notificationManager == null) {
-			_notificationManager = (NotificationManager) _service.getSystemService(Service.NOTIFICATION_SERVICE);
-		}
-		return _notificationManager;
-	}
 	public void startForeground(final int notificationId, final int resIconId, final int title, final int description, final int tickerText, final PendingIntent onClickIntent) {
 		final CharSequence titleString = _service.getText(title);
 		final CharSequence descriptionString = _service.getText(description);
@@ -57,15 +59,7 @@ public class ServiceForegrounder {
 				stopForeground();
 			}
 		}
-		
-		if(AndroidVersion.isEclairOrHigher()) {
-			_service.startForeground(notificationId, notification);
-		}
-		else {
-			_service.setForeground(true);
-			final NotificationManager nm = getNotificationManager();
-			nm.notify(notificationId, notification);
-		}
+		foregrounderProxy.startForeground(_service, notificationId, notification);
 	}
 	
 	public boolean isForegrounded() {
@@ -73,14 +67,43 @@ public class ServiceForegrounder {
 	}
 	
 	public void stopForeground() {
-		
-		if(AndroidVersion.isEclairOrHigher()) {
-			_service.stopForeground(true);
+		foregrounderProxy.stopForeground(_service, _notificationId);
+	}
+	
+	/* Versioned Proxies for foregrounding a service. */
+	
+	static interface IServiceForegrounder {
+		void startForeground(final Service service, final int notificationId, final Notification notification);
+		void stopForeground(final Service service, final int notificationId);
+	}
+	
+	static class DonutAndBelowServiceForegrounder implements IServiceForegrounder
+	{
+		private NotificationManager getNotificationManager(final Service service) {
+			return  (NotificationManager) service.getSystemService(Service.NOTIFICATION_SERVICE);
 		}
-		else {
-			final NotificationManager nm = getNotificationManager();
-			nm.cancel(_notificationId);
-			_service.setForeground(false);
+		
+		public void startForeground(final Service service, final int notificationId, final Notification notification) {
+			service.setForeground(true);
+			final NotificationManager nm = getNotificationManager(service);
+			nm.notify(notificationId, notification);
+		}
+
+		public void stopForeground(final Service service, final int notificationId) {
+			final NotificationManager nm = getNotificationManager(service);
+			nm.cancel(notificationId);
+			service.setForeground(false);
+		}
+	}
+	
+	static class EclairOrHigherServiceForegrounder implements IServiceForegrounder
+	{
+		public void startForeground(final Service service, final int notificationId, final Notification notification) {
+			service.startForeground(notificationId, notification);
+		}
+
+		public void stopForeground(final Service service, final int notificationId) {
+			service.stopForeground(true);
 		}
 	}
 }
