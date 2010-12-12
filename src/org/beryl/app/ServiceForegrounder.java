@@ -22,7 +22,7 @@ public class ServiceForegrounder {
 	public ServiceForegrounder(final Service service, final int notificationId) {
 		_service = service;
 		_notificationId = notificationId;
-		android.os.Debug.waitForDebugger();
+		
 		if(AndroidVersion.isEclairOrHigher()) {
 			foregrounderProxy = new EclairOrHigherServiceForegrounder();
 		}
