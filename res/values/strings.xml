@@ -3,7 +3,6 @@
     <string name="app_name">Lock Screen Switch</string>
     <string name="widget_label_1x1">Lock Screen Switch</string>
     <string name="service_name">Lock Screen Disable</string>
-    <string name="lockscreen_is_off">Lock Screen is off.</string>
-    <string name="lockscreen_is_off_tap_to_turn_on">Lock Screen is off. Tap to turn on.</string>
-    
+    <string name="lockscreen_is_off">Lock Screen is Off</string>
+    <string name="tap_to_turn_on">Tap here to turn on.</string>
 </resources>

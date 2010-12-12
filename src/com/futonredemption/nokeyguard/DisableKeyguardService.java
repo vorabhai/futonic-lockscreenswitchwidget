@@ -6,7 +6,6 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.BatteryManager;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 
@@ -66,12 +65,11 @@ public class DisableKeyguardService extends Service {
 		synchronized (_commandLock) {
 			final String remote_action = intent.getStringExtra(EXTRA_RemoteAction);
 
-			if (remote_action.equals(RemoteAction_EnableKeyguard)) {
+			// Backwards compatability. If the old "disable on charging" preference is set then put it to enable keyguard.
+			if (remote_action.equals(RemoteAction_EnableKeyguard) || remote_action.equals(RemoteAction_DisableKeyguardOnCharging)) {
 				onEnableKeyguard();
 			} else if (remote_action.equals(RemoteAction_DisableKeyguard)) {
 				onDisableKeyguard();
-			} else if (remote_action.equals(RemoteAction_DisableKeyguardOnCharging)) {
-				onDisableKeyguardOnCharging();
 			} else if (remote_action.equals(RemoteAction_RefreshWidgets)) {
 				onRefreshWidgets();
 			}
@@ -86,14 +84,7 @@ public class DisableKeyguardService extends Service {
 		if (lockscreenPreference == Constants.KEYGUARD_Disabled) {
 			isLockscreenEnabled = false;
 			disableLockscreen();
-		} else if (lockscreenPreference == Constants.KEYGUARD_DisableOnCharging) {
-			if (isSystemCharging()) {
-				isLockscreenEnabled = false;
-				disableLockscreen();
-			} else {
-				enableLockscreen();
-			}
-		} else if (lockscreenPreference == Constants.KEYGUARD_Enabled) {
+		} else {
 			isLockscreenEnabled = true;
 			enableLockscreen();
 		}
@@ -127,8 +118,8 @@ public class DisableKeyguardService extends Service {
 				
 				_foregrounder.startForeground(Constants.NOTIFICATION_ForegroundService,
 						R.drawable.stat_icon,
-						R.string.app_name,
-						R.string.lockscreen_is_off_tap_to_turn_on,
+						R.string.lockscreen_is_off,
+						R.string.tap_to_turn_on,
 						R.string.lockscreen_is_off,
 						reenableLockScreenIntent);
 			}
@@ -137,19 +128,6 @@ public class DisableKeyguardService extends Service {
 
 	private PendingIntent getReenableLockScreenIntent() {
 		return PendingIntent.getService(this, 0, Intents.enableKeyguard(this), PendingIntent.FLAG_UPDATE_CURRENT);
-	}
-	
-	private boolean isSystemCharging() {
-		boolean isCharging = false;
-		final Intent powerstate = Intents.getBatteryState(this);
-		if (powerstate != null) {
-			final int battstate = powerstate.getIntExtra("status", BatteryManager.BATTERY_STATUS_FULL);
-			if (battstate == BatteryManager.BATTERY_STATUS_CHARGING || battstate == BatteryManager.BATTERY_STATUS_FULL) {
-				isCharging = true;
-			}
-		}
-
-		return isCharging;
 	}
 
 	private void onRefreshWidgets() {
@@ -170,11 +148,6 @@ public class DisableKeyguardService extends Service {
 	private void destroyKeyguard() {
 		_wrapper.dispose();
 		this.stopSelf();
-	}
-	
-	private void onDisableKeyguardOnCharging() {
-		setKeyguardTogglePreference(Constants.KEYGUARD_DisableOnCharging);
-		updateAllWidgets();
 	}
 
 	private int getKeyguardEnabledPreference() {

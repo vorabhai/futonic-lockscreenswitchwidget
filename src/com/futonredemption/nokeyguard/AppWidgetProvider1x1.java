@@ -63,13 +63,9 @@ public class AppWidgetProvider1x1 extends AppWidgetProvider {
 		int iconId = 0;
 		int indicatorId = 0;
 
-		// Widget Click Intent Cycle: Disable -> Disable on Charging -> Enable
 		if (widgetState == Constants.KEYGUARD_Disabled) {
-			intent = Intents.disableKeyguardOnCharging(context);
-			indicatorId = R.drawable.appwidget_settings_ind_off_single;
-		} else if (widgetState == Constants.KEYGUARD_DisableOnCharging) {
 			intent = Intents.enableKeyguard(context);
-			indicatorId = R.drawable.appwidget_settings_ind_mid_single;
+			indicatorId = R.drawable.appwidget_settings_ind_off_single;
 		} else {
 			intent = Intents.disableKeyguard(context);
 			indicatorId = R.drawable.appwidget_settings_ind_on_single;
