@@ -17,12 +17,12 @@ public class ServiceForegrounder {
 	
 	private final IServiceForegrounder foregrounderProxy;
 	private final Service _service;
-	
-	private int _notificationId = -1;
-	
-	public ServiceForegrounder(final Service service) {
+	private final int _notificationId;
+	private boolean _isForegrounded = false;
+	public ServiceForegrounder(final Service service, final int notificationId) {
 		_service = service;
-		
+		_notificationId = notificationId;
+		android.os.Debug.waitForDebugger();
 		if(AndroidVersion.isEclairOrHigher()) {
 			foregrounderProxy = new EclairOrHigherServiceForegrounder();
 		}
@@ -31,43 +31,37 @@ public class ServiceForegrounder {
 		}
 	}
 
-	public void startForeground(final int notificationId, final int resIconId, final int title, final int description, final int tickerText, final PendingIntent onClickIntent) {
+	public void startForeground(final int resIconId, final int title, final int description, final int tickerText, final PendingIntent onClickIntent) {
 		final CharSequence titleString = _service.getText(title);
 		final CharSequence descriptionString = _service.getText(description);
 		final CharSequence tickerTextString = _service.getText(tickerText);
 		
-		startForeground(notificationId, resIconId, titleString, descriptionString, tickerTextString, onClickIntent);
+		startForeground(resIconId, titleString, descriptionString, tickerTextString, onClickIntent);
 	}
 
-	public void startForeground(final int notificationId, final int resIconId, final CharSequence title, final CharSequence description, final CharSequence tickerText, final PendingIntent onClickIntent) {
+	public void startForeground(final int resIconId, final CharSequence title, final CharSequence description, final CharSequence tickerText, final PendingIntent onClickIntent) {
 		
 		final Notification notifier = new Notification();
-		notifier.flags = Notification.FLAG_ONGOING_EVENT | Notification.FLAG_FOREGROUND_SERVICE;
 		notifier.icon = resIconId;
 
 		notifier.tickerText = tickerText;
 		notifier.setLatestEventInfo(_service, title, description, onClickIntent);
 		
-		startForeground(notificationId, notifier);
+		startForeground(notifier);
 	}
 	
-	public void startForeground(final int notificationId, final Notification notification) {
-		
-		// If currently foregrounded and the new id is different, cancel the old id.
-		if(isForegrounded()) {
-			if (_notificationId != notificationId) {
-				stopForeground();
-			}
-		}
-		foregrounderProxy.startForeground(_service, notificationId, notification);
+	public void startForeground(final Notification notification) {
+		_isForegrounded = true;
+		foregrounderProxy.startForeground(_service, _notificationId, notification);
 	}
 	
 	public boolean isForegrounded() {
-		return _notificationId != -1;
+		return _isForegrounded;
 	}
 	
 	public void stopForeground() {
 		foregrounderProxy.stopForeground(_service, _notificationId);
+		_isForegrounded = false;
 	}
 	
 	/* Versioned Proxies for foregrounding a service. */
@@ -86,6 +80,8 @@ public class ServiceForegrounder {
 		public void startForeground(final Service service, final int notificationId, final Notification notification) {
 			service.setForeground(true);
 			final NotificationManager nm = getNotificationManager(service);
+			notification.flags = Notification.FLAG_ONGOING_EVENT | Notification.FLAG_AUTO_CANCEL;
+			
 			nm.notify(notificationId, notification);
 		}
 
@@ -99,6 +95,7 @@ public class ServiceForegrounder {
 	static class EclairOrHigherServiceForegrounder implements IServiceForegrounder
 	{
 		public void startForeground(final Service service, final int notificationId, final Notification notification) {
+			notification.flags = Notification.FLAG_ONGOING_EVENT | Notification.FLAG_FOREGROUND_SERVICE;
 			service.startForeground(notificationId, notification);
 		}
 

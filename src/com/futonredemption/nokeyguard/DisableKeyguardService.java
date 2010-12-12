@@ -13,7 +13,7 @@ public class DisableKeyguardService extends Service {
 	private Object _commandLock = new Object();
 
 	private KeyguardLockWrapper _wrapper;
-	private ServiceForegrounder _foregrounder = new ServiceForegrounder(this);
+	private ServiceForegrounder _foregrounder = new ServiceForegrounder(this, Constants.NOTIFICATION_ForegroundService);
 	
 	private static final String KeyGuardTag = "KeyguardLockWrapper";
 	
@@ -116,7 +116,7 @@ public class DisableKeyguardService extends Service {
 			if(! _foregrounder.isForegrounded()) {
 				final PendingIntent reenableLockScreenIntent = getReenableLockScreenIntent();
 				
-				_foregrounder.startForeground(Constants.NOTIFICATION_ForegroundService,
+				_foregrounder.startForeground(
 						R.drawable.stat_icon,
 						R.string.lockscreen_is_off,
 						R.string.tap_to_turn_on,
