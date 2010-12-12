@@ -1,19 +1,20 @@
 package com.futonredemption.nokeyguard;
 
+import org.beryl.app.ServiceForegrounder;
+
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.os.BatteryManager;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
-import android.text.Html;
-import android.widget.Toast;
 
 public class DisableKeyguardService extends Service {
 	private Object _commandLock = new Object();
 
 	private KeyguardLockWrapper _wrapper;
+	private ServiceForegrounder _foregrounder = new ServiceForegrounder(this);
 	
 	private static final String KeyGuardTag = "KeyguardLockWrapper";
 	
@@ -77,56 +78,67 @@ public class DisableKeyguardService extends Service {
 		}
 	}
 
-	private void updateAllWidgets(boolean notifyUser) {
+	private void updateAllWidgets() {
 		boolean isLockscreenEnabled = true;
 
 		int lockscreenPreference = getKeyguardEnabledPreference();
 
 		if (lockscreenPreference == Constants.KEYGUARD_Disabled) {
 			isLockscreenEnabled = false;
-			disableLockscreen(notifyUser);
+			disableLockscreen();
 		} else if (lockscreenPreference == Constants.KEYGUARD_DisableOnCharging) {
 			if (isSystemCharging()) {
 				isLockscreenEnabled = false;
-				disableLockscreen(notifyUser);
+				disableLockscreen();
 			} else {
-				enableLockscreen(notifyUser);
+				enableLockscreen();
 			}
 		} else if (lockscreenPreference == Constants.KEYGUARD_Enabled) {
 			isLockscreenEnabled = true;
-			enableLockscreen(notifyUser);
+			enableLockscreen();
 		}
 
 		AppWidgetProvider1x1.UpdateAllWidgets(this, lockscreenPreference, isLockscreenEnabled);
 	}
 
-	private void disableLockscreen(boolean notifyUser) {
-		setLockscreenMode(false, notifyUser);
+	private void disableLockscreen() {
+		setLockscreenMode(false);
 	}
 
-	private void enableLockscreen(boolean notifyUser) {
-		setLockscreenMode(true, notifyUser);
+	private void enableLockscreen() {
+		setLockscreenMode(true);
 	}
 
-	private void setLockscreenMode(boolean enableLockscreen, boolean forceNotifyUser) {
-		boolean actionPerformed;
+	private void setLockscreenMode(boolean enableLockscreen) {
 
 		if (enableLockscreen) {
-			actionPerformed = _wrapper.enableKeyguard();
+			_wrapper.enableKeyguard();
 		} else {
-			actionPerformed = _wrapper.disableKeyguard();
+			_wrapper.disableKeyguard();
 		}
 
-		final int mode = getKeyguardEnabledPreference();
-		if (actionPerformed) {
-			forceNotifyUser = true;
+		if(enableLockscreen) {
+			_foregrounder.stopForeground();
 		}
-
-		if (forceNotifyUser) {
-			showLockscreenStateMessage(enableLockscreen, mode);
+		else {
+			
+			if(! _foregrounder.isForegrounded()) {
+				final PendingIntent reenableLockScreenIntent = getReenableLockScreenIntent();
+				
+				_foregrounder.startForeground(Constants.NOTIFICATION_ForegroundService,
+						R.drawable.stat_icon,
+						R.string.app_name,
+						R.string.lockscreen_is_off_tap_to_turn_on,
+						R.string.lockscreen_is_off,
+						reenableLockScreenIntent);
+			}
 		}
 	}
 
+	private PendingIntent getReenableLockScreenIntent() {
+		return PendingIntent.getService(this, 0, Intents.enableKeyguard(this), PendingIntent.FLAG_UPDATE_CURRENT);
+	}
+	
 	private boolean isSystemCharging() {
 		boolean isCharging = false;
 		final Intent powerstate = Intents.getBatteryState(this);
@@ -141,17 +153,17 @@ public class DisableKeyguardService extends Service {
 	}
 
 	private void onRefreshWidgets() {
-		updateAllWidgets(false);
+		updateAllWidgets();
 	}
 
 	private void onDisableKeyguard() {
 		setKeyguardTogglePreference(Constants.KEYGUARD_Disabled);
-		updateAllWidgets(true);
+		updateAllWidgets();
 	}
 
 	private void onEnableKeyguard() {
 		setKeyguardTogglePreference(Constants.KEYGUARD_Enabled);
-		updateAllWidgets(true);
+		updateAllWidgets();
 		destroyKeyguard();
 	}
 
@@ -162,46 +174,7 @@ public class DisableKeyguardService extends Service {
 	
 	private void onDisableKeyguardOnCharging() {
 		setKeyguardTogglePreference(Constants.KEYGUARD_DisableOnCharging);
-		updateAllWidgets(true);
-	}
-
-	private void showLockscreenStateMessage(boolean isLockscreenEnabled, int mode) {
-		final Resources res = this.getResources();
-		int highlightColor;
-		String colorHexCode;
-		int toggleResId;
-
-		if (isLockscreenEnabled == true) {
-			toggleResId = R.string.on;
-			highlightColor = res.getColor(R.color.green);
-		} else {
-			toggleResId = R.string.off;
-			highlightColor = res.getColor(R.color.red);
-		}
-
-		colorHexCode = Integer.toHexString(highlightColor);
-
-		String baseMessage = this.getString(R.string.lockscreen_is);
-		String toggleDescription = this.getString(toggleResId);
-		StringBuilder sb = new StringBuilder();
-		sb.append("<center>");
-		sb.append(baseMessage);
-
-		sb.append(" <b><font color=\"#");
-		sb.append(colorHexCode);
-		sb.append("\">");
-		sb.append(toggleDescription.toUpperCase());
-		sb.append("</font></b>");
-		sb.append(".");
-
-		if (mode == Constants.KEYGUARD_DisableOnCharging) {
-			sb.append("<br /><i>");
-			sb.append(getString(R.string.lock_screen_is_disabled_while_charging));
-			sb.append("</i>");
-		}
-
-		sb.append("</center>");
-		Toast.makeText(this, Html.fromHtml(sb.toString()), Toast.LENGTH_LONG).show();
+		updateAllWidgets();
 	}
 
 	private int getKeyguardEnabledPreference() {
