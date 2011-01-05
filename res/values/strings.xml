@@ -4,7 +4,7 @@
     <string name="widget_label_1x1">Lock Screen Switch</string>
     <string name="service_name">Lock Screen Disable</string>
     <string name="lockscreen_is_off">Lock Screen is Off</string>
-    <string name="tap_to_configure">Tap for settings.</string>
+    <string name="select_to_configure">Select to change settings.</string>
     <string name="activity_preferences">Lock Screen Switch Settings</string>
     
     <string name="PrefCategory_ActivateOnly">Disable Lock Screen Rules</string>

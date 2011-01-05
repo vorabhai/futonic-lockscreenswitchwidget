@@ -6,6 +6,7 @@ import com.futonredemption.nokeyguard.Constants;
 import com.futonredemption.nokeyguard.Intents;
 import com.futonredemption.nokeyguard.KeyguardLockWrapper;
 import com.futonredemption.nokeyguard.R;
+import com.futonredemption.nokeyguard.StrictModeEnabler;
 import com.futonredemption.nokeyguard.appwidgets.AppWidgetProvider1x1;
 
 import android.app.PendingIntent;
@@ -32,6 +33,7 @@ public class DisableKeyguardService extends Service {
 
 	@Override
 	public void onCreate() {
+		StrictModeEnabler.setupStrictMode();
 		super.onCreate();
 
 		_wrapper = new KeyguardLockWrapper(this, KeyGuardTag);
@@ -125,7 +127,7 @@ public class DisableKeyguardService extends Service {
 				_foregrounder.startForeground(
 						R.drawable.stat_icon,
 						R.string.lockscreen_is_off,
-						R.string.tap_to_configure,
+						R.string.select_to_configure,
 						R.string.lockscreen_is_off,
 						showPreferencesIntent);
 			}
