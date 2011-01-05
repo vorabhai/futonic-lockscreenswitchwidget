@@ -2,6 +2,7 @@ package com.futonredemption.nokeyguard.appwidgets;
 
 import com.futonredemption.nokeyguard.Constants;
 import com.futonredemption.nokeyguard.Intents;
+import com.futonredemption.nokeyguard.LockScreenState;
 import com.futonredemption.nokeyguard.R;
 import com.futonredemption.nokeyguard.StrictModeEnabler;
 
@@ -11,6 +12,7 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.RemoteViews;
 
 public class AppWidgetProvider1x1 extends AppWidgetProvider {
@@ -22,6 +24,7 @@ public class AppWidgetProvider1x1 extends AppWidgetProvider {
 
 		// Handle non-appwidget intents.
 		final String action = intent.getAction();
+		Log.i("", action);
 		if (! AppWidgetManager.ACTION_APPWIDGET_UPDATE.equals(action)) {
 			refreshWidgets(context);
 		}
@@ -31,7 +34,7 @@ public class AppWidgetProvider1x1 extends AppWidgetProvider {
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
 		StrictModeEnabler.setupStrictMode();
 		super.onUpdate(context, appWidgetManager, appWidgetIds);
-		
+		Log.i("", "onUpdate");
 		refreshWidgets(context);
 	}
 
@@ -44,19 +47,19 @@ public class AppWidgetProvider1x1 extends AppWidgetProvider {
 		context.startService(Intents.enableKeyguard(context));
 	}
 
-	public static void UpdateAllWidgets(final Context context, final int widgetState, final boolean isLockscreenEnabled) {
+	public static void UpdateAllWidgets(final Context context, final LockScreenState state) {
+	//final int widgetState, final boolean isLockscreenEnabled) {
 		int i, len;
 		final AppWidgetManager widget_manager = AppWidgetManager.getInstance(context);
 		final int[] ids1x1 = widget_manager.getAppWidgetIds(new ComponentName(context, AppWidgetProvider1x1.class));
 
 		len = ids1x1.length;
 		for (i = 0; i < len; i++) {
-			AppWidgetProvider1x1.UpdateWidget(context, widget_manager, ids1x1[i], widgetState, isLockscreenEnabled);
+			AppWidgetProvider1x1.UpdateWidget(context, widget_manager, ids1x1[i], state);
 		}
 	}
 
-	public static void UpdateWidget(final Context context, final AppWidgetManager widgetManager, final int widgetId,
-			final int widgetState, final boolean isLockscreenEnabled) {
+	public static void UpdateWidget(final Context context, final AppWidgetManager widgetManager, final int widgetId, final LockScreenState state) {
 		RemoteViews views = null;
 
 		views = new RemoteViews(context.getPackageName(), R.layout.appwidget_1x1);
@@ -65,10 +68,10 @@ public class AppWidgetProvider1x1 extends AppWidgetProvider {
 		int iconId = 0;
 		int indicatorId = 0;
 
-		if (widgetState == Constants.STATE_Disabled) {
+		if (state.Mode == Constants.MODE_Disabled) {
 			intent = Intents.enableKeyguard(context);
 			indicatorId = R.drawable.appwidget_settings_ind_off_single;
-		} else if (widgetState == Constants.STATE_ConditionalToggle) {
+		} else if (state.Mode == Constants.MODE_ConditionalToggle) {
 			intent = Intents.enableKeyguard(context);
 			indicatorId = R.drawable.appwidget_settings_ind_mid_single;
 		} else {
@@ -76,7 +79,7 @@ public class AppWidgetProvider1x1 extends AppWidgetProvider {
 			indicatorId = R.drawable.appwidget_settings_ind_on_single;
 		}
 
-		if (isLockscreenEnabled) {
+		if (state.IsLockActive) {
 			iconId = R.drawable.ic_appwidget_screenlock_on;
 		} else {
 			iconId = R.drawable.ic_appwidget_screenlock_off;

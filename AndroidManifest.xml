@@ -30,5 +30,6 @@
 			android:label="@string/service_name" android:enabled="true" />
 	</application>
 	<uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+	<uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 	<uses-sdk android:minSdkVersion="3" />
 </manifest>

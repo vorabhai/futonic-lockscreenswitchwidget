@@ -3,8 +3,10 @@ package com.futonredemption.nokeyguard.services;
 import org.beryl.app.ServiceForegrounder;
 
 import com.futonredemption.nokeyguard.Constants;
+import com.futonredemption.nokeyguard.HeadsetStateGetter;
 import com.futonredemption.nokeyguard.Intents;
 import com.futonredemption.nokeyguard.KeyguardLockWrapper;
+import com.futonredemption.nokeyguard.LockScreenState;
 import com.futonredemption.nokeyguard.R;
 import com.futonredemption.nokeyguard.StrictModeEnabler;
 import com.futonredemption.nokeyguard.appwidgets.AppWidgetProvider1x1;
@@ -13,6 +15,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.BatteryManager;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 
@@ -85,21 +88,75 @@ public class DisableKeyguardService extends Service {
 	}
 
 	private void updateAllWidgets() {
-		boolean isLockscreenEnabled = true;
+		final LockScreenState state = new LockScreenState();
+		
+		state.Mode = getKeyguardEnabledPreference();
 
-		int lockscreenPreference = getKeyguardEnabledPreference();
-
-		if (lockscreenPreference == Constants.STATE_Enabled) {
-			isLockscreenEnabled = true;
-			enableLockscreen();
+		if (state.Mode == Constants.MODE_Enabled) {
+			state.IsLockActive = true;
 		} else {
-			isLockscreenEnabled = false;
+			determineIfLockShouldBeDeactivated(state);
+		}
+		
+		if(state.IsLockActive) {
+			enableLockscreen();
+		}
+		else {
 			disableLockscreen();
 		}
 
-		AppWidgetProvider1x1.UpdateAllWidgets(this, lockscreenPreference, isLockscreenEnabled);
+		AppWidgetProvider1x1.UpdateAllWidgets(this, state);
 	}
 
+	private void determineIfLockShouldBeDeactivated(final LockScreenState state) {
+		final SharedPreferences prefs = getPreferences();
+		
+		boolean prefActivateOnlyWhenCharging = prefs.getBoolean("PrefActivateOnlyWhenCharging", false);
+		boolean prefActivateOnlyWhenHeadphonesPluggedIn = prefs.getBoolean("PrefActivateOnlyWhenHeadphonesPluggedIn", false);
+		boolean prefActivateOnlyWhenDocked = prefs.getBoolean("PrefActivateOnlyWhenDocked", false);
+		
+		// Assume that the lock will be disabled.
+		state.Mode = Constants.MODE_Disabled;
+		state.IsLockActive = false;
+		
+		if(prefActivateOnlyWhenCharging || prefActivateOnlyWhenHeadphonesPluggedIn || prefActivateOnlyWhenDocked) {
+			
+			// Since we have a restriction we need to build an or case against it to see if the lock really should be disabled.
+			state.Mode = Constants.MODE_ConditionalToggle;
+			state.IsLockActive = true;
+
+			if(prefActivateOnlyWhenCharging) {
+				if(isSystemCharging()) {
+					state.IsLockActive = false;
+				}
+			}
+			
+			if(prefActivateOnlyWhenHeadphonesPluggedIn) {
+				if(isHeadsetPluggedIn()) {
+					state.IsLockActive = false;
+				}
+			}
+		}
+	}
+	
+	private boolean isSystemCharging() {
+		boolean isCharging = false;
+		final Intent powerstate = Intents.getBatteryState(this);
+		if (powerstate != null) {
+			final int battstate = powerstate.getIntExtra("status", BatteryManager.BATTERY_STATUS_FULL);
+			if (battstate == BatteryManager.BATTERY_STATUS_CHARGING || battstate == BatteryManager.BATTERY_STATUS_FULL) {
+				isCharging = true;
+			}
+		}
+
+		return isCharging;
+	}
+	
+	private boolean isHeadsetPluggedIn() {
+		final HeadsetStateGetter getter = new HeadsetStateGetter(this);
+		return getter.isHeadsetPluggedIn();
+	}
+	
 	private void disableLockscreen() {
 		setLockscreenMode(false);
 	}
@@ -143,12 +200,12 @@ public class DisableKeyguardService extends Service {
 	}
 
 	private void onDisableKeyguard() {
-		setKeyguardTogglePreference(Constants.STATE_Disabled);
+		setKeyguardTogglePreference(Constants.MODE_Disabled);
 		updateAllWidgets();
 	}
 
 	private void onEnableKeyguard() {
-		setKeyguardTogglePreference(Constants.STATE_Enabled);
+		setKeyguardTogglePreference(Constants.MODE_Enabled);
 		updateAllWidgets();
 		destroyKeyguard();
 	}
@@ -159,12 +216,16 @@ public class DisableKeyguardService extends Service {
 	}
 
 	private int getKeyguardEnabledPreference() {
-		final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		return prefs.getInt(Constants.Preference_KeyguardToggle, Constants.STATE_Enabled);
+		final SharedPreferences prefs = getPreferences();
+		return prefs.getInt(Constants.Preference_KeyguardToggle, Constants.MODE_Enabled);
 	}
 
 	private void setKeyguardTogglePreference(final int param) {
-		final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		final SharedPreferences prefs = getPreferences();
 		prefs.edit().putInt(Constants.Preference_KeyguardToggle, param).commit();
+	}
+	
+	private SharedPreferences getPreferences() {
+		return PreferenceManager.getDefaultSharedPreferences(this);
 	}
 }
