@@ -120,20 +120,20 @@ public class DisableKeyguardService extends Service {
 		else {
 			
 			if(! _foregrounder.isForegrounded()) {
-				final PendingIntent reenableLockScreenIntent = getReenableLockScreenIntent();
+				final PendingIntent showPreferencesIntent = getShowPreferencesActivity();
 				
 				_foregrounder.startForeground(
 						R.drawable.stat_icon,
 						R.string.lockscreen_is_off,
-						R.string.tap_to_turn_on,
+						R.string.tap_to_configure,
 						R.string.lockscreen_is_off,
-						reenableLockScreenIntent);
+						showPreferencesIntent);
 			}
 		}
 	}
 
-	private PendingIntent getReenableLockScreenIntent() {
-		return PendingIntent.getService(this, 0, Intents.enableKeyguard(this), PendingIntent.FLAG_UPDATE_CURRENT);
+	private PendingIntent getShowPreferencesActivity() {
+		return PendingIntent.getActivity(this, 0, Intents.showPreferencesActivity(this), PendingIntent.FLAG_UPDATE_CURRENT);
 	}
 
 	private void onRefreshWidgets() {
