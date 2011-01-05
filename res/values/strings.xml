@@ -5,4 +5,5 @@
     <string name="service_name">Lock Screen Disable</string>
     <string name="lockscreen_is_off">Lock Screen is Off</string>
     <string name="tap_to_turn_on">Tap here to turn on.</string>
+    <string name="activity_preferences">Lock Screen Switch Settings</string>
 </resources>

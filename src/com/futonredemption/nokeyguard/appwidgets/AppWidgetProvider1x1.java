@@ -1,4 +1,8 @@
-package com.futonredemption.nokeyguard;
+package com.futonredemption.nokeyguard.appwidgets;
+
+import com.futonredemption.nokeyguard.Constants;
+import com.futonredemption.nokeyguard.Intents;
+import com.futonredemption.nokeyguard.R;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -14,15 +18,9 @@ public class AppWidgetProvider1x1 extends AppWidgetProvider {
 		// Handle the basic AppWidget intents.
 		super.onReceive(context, intent);
 
-		// Handle possible system sent intents as well.
+		// Handle non-appwidget intents.
 		final String action = intent.getAction();
-		if (Intent.ACTION_SCREEN_OFF.equals(action)) {
-			refreshWidgets(context);
-		} else if (Intent.ACTION_SCREEN_ON.equals(action)) {
-			refreshWidgets(context);
-		} else if (Intent.ACTION_POWER_DISCONNECTED.equals(action)) {
-			refreshWidgets(context);
-		} else if (Intent.ACTION_POWER_CONNECTED.equals(action)) {
+		if (! AppWidgetManager.ACTION_APPWIDGET_UPDATE.equals(action)) {
 			refreshWidgets(context);
 		}
 	}
@@ -53,7 +51,7 @@ public class AppWidgetProvider1x1 extends AppWidgetProvider {
 		}
 	}
 
-	public static void UpdateWidget(final Context context, final AppWidgetManager widgetManager, final int widget_id,
+	public static void UpdateWidget(final Context context, final AppWidgetManager widgetManager, final int widgetId,
 			final int widgetState, final boolean isLockscreenEnabled) {
 		RemoteViews views = null;
 
@@ -63,9 +61,12 @@ public class AppWidgetProvider1x1 extends AppWidgetProvider {
 		int iconId = 0;
 		int indicatorId = 0;
 
-		if (widgetState == Constants.KEYGUARD_Disabled) {
+		if (widgetState == Constants.STATE_Disabled) {
 			intent = Intents.enableKeyguard(context);
 			indicatorId = R.drawable.appwidget_settings_ind_off_single;
+		} else if (widgetState == Constants.STATE_ConditionalToggle) {
+			intent = Intents.enableKeyguard(context);
+			indicatorId = R.drawable.appwidget_settings_ind_mid_single;
 		} else {
 			intent = Intents.disableKeyguard(context);
 			indicatorId = R.drawable.appwidget_settings_ind_on_single;
@@ -81,6 +82,6 @@ public class AppWidgetProvider1x1 extends AppWidgetProvider {
 		views.setOnClickPendingIntent(R.id.btnKeyguard, pIntent);
 		views.setImageViewResource(R.id.imgKeyguard, iconId);
 		views.setImageViewResource(R.id.indKeyguard, indicatorId);
-		widgetManager.updateAppWidget(widget_id, views);
+		widgetManager.updateAppWidget(widgetId, views);
 	}
 }

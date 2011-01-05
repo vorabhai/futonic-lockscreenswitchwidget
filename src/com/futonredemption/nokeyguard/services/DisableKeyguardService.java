@@ -1,6 +1,12 @@
-package com.futonredemption.nokeyguard;
+package com.futonredemption.nokeyguard.services;
 
 import org.beryl.app.ServiceForegrounder;
+
+import com.futonredemption.nokeyguard.Constants;
+import com.futonredemption.nokeyguard.Intents;
+import com.futonredemption.nokeyguard.KeyguardLockWrapper;
+import com.futonredemption.nokeyguard.R;
+import com.futonredemption.nokeyguard.appwidgets.AppWidgetProvider1x1;
 
 import android.app.PendingIntent;
 import android.app.Service;
@@ -81,12 +87,12 @@ public class DisableKeyguardService extends Service {
 
 		int lockscreenPreference = getKeyguardEnabledPreference();
 
-		if (lockscreenPreference == Constants.KEYGUARD_Disabled) {
-			isLockscreenEnabled = false;
-			disableLockscreen();
-		} else {
+		if (lockscreenPreference == Constants.STATE_Enabled) {
 			isLockscreenEnabled = true;
 			enableLockscreen();
+		} else {
+			isLockscreenEnabled = false;
+			disableLockscreen();
 		}
 
 		AppWidgetProvider1x1.UpdateAllWidgets(this, lockscreenPreference, isLockscreenEnabled);
@@ -135,12 +141,12 @@ public class DisableKeyguardService extends Service {
 	}
 
 	private void onDisableKeyguard() {
-		setKeyguardTogglePreference(Constants.KEYGUARD_Disabled);
+		setKeyguardTogglePreference(Constants.STATE_Disabled);
 		updateAllWidgets();
 	}
 
 	private void onEnableKeyguard() {
-		setKeyguardTogglePreference(Constants.KEYGUARD_Enabled);
+		setKeyguardTogglePreference(Constants.STATE_Enabled);
 		updateAllWidgets();
 		destroyKeyguard();
 	}
@@ -152,7 +158,7 @@ public class DisableKeyguardService extends Service {
 
 	private int getKeyguardEnabledPreference() {
 		final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		return prefs.getInt(Constants.Preference_KeyguardToggle, Constants.KEYGUARD_Enabled);
+		return prefs.getInt(Constants.Preference_KeyguardToggle, Constants.STATE_Enabled);
 	}
 
 	private void setKeyguardTogglePreference(final int param) {
