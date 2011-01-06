@@ -19,12 +19,13 @@ public class AppWidgetProvider1x1 extends AppWidgetProvider {
 	
 	public void onReceive(Context context, Intent intent) {
 		StrictModeEnabler.setupStrictMode();
+		
 		// Handle the basic AppWidget intents.
 		super.onReceive(context, intent);
 
 		// Handle non-appwidget intents.
 		final String action = intent.getAction();
-		Log.i("", action);
+		Log.i("Action", action);
 		if (! AppWidgetManager.ACTION_APPWIDGET_UPDATE.equals(action)) {
 			refreshWidgets(context);
 		}
@@ -34,7 +35,7 @@ public class AppWidgetProvider1x1 extends AppWidgetProvider {
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
 		StrictModeEnabler.setupStrictMode();
 		super.onUpdate(context, appWidgetManager, appWidgetIds);
-		Log.i("", "onUpdate");
+
 		refreshWidgets(context);
 	}
 

@@ -10,6 +10,7 @@ import com.futonredemption.nokeyguard.LockScreenState;
 import com.futonredemption.nokeyguard.R;
 import com.futonredemption.nokeyguard.StrictModeEnabler;
 import com.futonredemption.nokeyguard.appwidgets.AppWidgetProvider1x1;
+import com.futonredemption.nokeyguard.receivers.RelayRefreshWidgetReceiver;
 
 import android.app.PendingIntent;
 import android.app.Service;
@@ -34,18 +35,22 @@ public class DisableKeyguardService extends Service {
 	public static final String EXTRA_RemoteAction = "EXTRA_RemoteAction";
 	public static final String EXTRA_ForceNotify = "EXTRA_ForceNotify";
 
+	final RelayRefreshWidgetReceiver receiver = new RelayRefreshWidgetReceiver();
+
 	@Override
 	public void onCreate() {
 		StrictModeEnabler.setupStrictMode();
 		super.onCreate();
-
+		
+		RelayRefreshWidgetReceiver.startReceiver(this, receiver);
 		_wrapper = new KeyguardLockWrapper(this, KeyGuardTag);
 	}
 
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		
+
+		RelayRefreshWidgetReceiver.stopReceiver(this, receiver);
 		_wrapper.dispose();
 	}
 
