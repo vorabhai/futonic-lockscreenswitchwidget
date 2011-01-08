@@ -183,7 +183,8 @@ public class DisableKeyguardService extends Service {
 		}
 		else {
 			
-			if(! _foregrounder.isForegrounded()) {
+			// Some users don't like the notification so it will not appear but they don't get foregrounding.
+			if(getShowNotificationPreference() && ! _foregrounder.isForegrounded()) {
 				final PendingIntent showPreferencesIntent = getShowPreferencesActivity();
 				
 				_foregrounder.startForeground(
@@ -220,6 +221,11 @@ public class DisableKeyguardService extends Service {
 		this.stopSelf();
 	}
 
+	private boolean getShowNotificationPreference() {
+		final SharedPreferences prefs = getPreferences();
+		return prefs.getBoolean(Constants.Preference_ShowNotification, true);
+	}
+	
 	private int getKeyguardEnabledPreference() {
 		final SharedPreferences prefs = getPreferences();
 		return prefs.getInt(Constants.Preference_KeyguardToggle, Constants.MODE_Enabled);

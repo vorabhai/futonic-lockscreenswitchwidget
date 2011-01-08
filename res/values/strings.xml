@@ -7,6 +7,11 @@
     <string name="select_to_configure">Select to change settings.</string>
     <string name="activity_preferences">Lock Screen Switch Settings</string>
     
+    <string name="PrefCategory_Options">Disable Lock Screen Rules</string>
+    
+    <string name="PrefTitle_PrefShowNotification">Show Notification</string>
+    <string name="PrefDesc_PrefShowNotification">Display notification when lock screen is off. (Unstable if turned off.)</string>
+    
     <string name="PrefCategory_ActivateOnly">Disable Lock Screen Rules</string>
     
     <string name="PrefTitle_PrefActivateOnlyWhenCharging">Charging</string>
