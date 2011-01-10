@@ -7,20 +7,20 @@
     <string name="select_to_configure">Select to change settings.</string>
     <string name="activity_preferences">Lock Screen Switch Settings</string>
     
-    <string name="PrefCategory_Options">Disable Lock Screen Rules</string>
+    <string name="PrefCategory_Options">General</string>
     
     <string name="PrefTitle_PrefHideNotification">Hide Notification</string>
     <string name="PrefDesc_PrefHideNotification">Notification will disappear 5 seconds after disabling the lock screen. (Unstable)</string>
     
-    <string name="PrefCategory_ActivateOnly">Disable Lock Screen Rules</string>
+    <string name="PrefCategory_ActivateOnly">Rules</string>
     
-    <string name="PrefTitle_PrefActivateOnlyWhenCharging">Charging</string>
+    <string name="PrefTitle_PrefActivateOnlyWhenCharging">Only When Charging</string>
     <string name="PrefDesc_PrefActivateOnlyWhenCharging">Only disables the lock screen when charging.</string>
     
-    <string name="PrefTitle_PrefActivateOnlyWhenHeadphonesPluggedIn">Headphones Plugged In</string>
+    <string name="PrefTitle_PrefActivateOnlyWhenHeadphonesPluggedIn">Only When Headphones Plugged In</string>
     <string name="PrefDesc_PrefActivateOnlyWhenHeadphonesPluggedIn">Disable lock screen when headphones are plugged in.</string>
     
-    <string name="PrefTitle_PrefActivateOnlyWhenDocked">Docked</string>
+    <string name="PrefTitle_PrefActivateOnlyWhenDocked">Only When Docked</string>
     <string name="PrefDesc_PrefActivateOnlyWhenDocked">Disable lock screen when connected to a docking station.</string>
     
     <string name="PrefCategory_PreventActivationOn">Prevent Auto Unlock On</string>

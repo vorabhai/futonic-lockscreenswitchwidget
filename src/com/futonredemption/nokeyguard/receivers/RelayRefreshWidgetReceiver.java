@@ -4,15 +4,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.util.Log;
 
 public class RelayRefreshWidgetReceiver extends BroadcastReceiver {
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		Log.w("RelayRefreshWidgetReceiver", intent.getAction());
 	}
-	
 
 	public static void startReceiver(final Context context, final RelayRefreshWidgetReceiver receiver) {
 		final IntentFilter filter = new IntentFilter();

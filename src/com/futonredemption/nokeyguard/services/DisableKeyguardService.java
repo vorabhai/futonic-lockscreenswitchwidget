@@ -33,7 +33,6 @@ public class DisableKeyguardService extends Service {
 	public static final String RemoteAction_RefreshWidgets = "RemoteAction_RefreshWidgets";
 	public static final String EXTRA_RemoteAction = "EXTRA_RemoteAction";
 	public static final String EXTRA_ForceNotify = "EXTRA_ForceNotify";
-	public static final String EXTRA_UserInvoked = "EXTRA_UserInvoked";
 
 	final RelayRefreshWidgetReceiver receiver = new RelayRefreshWidgetReceiver();
 	
@@ -151,8 +150,8 @@ public class DisableKeyguardService extends Service {
 		boolean isCharging = false;
 		final Intent powerstate = Intents.getBatteryState(this);
 		if (powerstate != null) {
-			final int battstate = powerstate.getIntExtra("status", BatteryManager.BATTERY_STATUS_FULL);
-			if (battstate == BatteryManager.BATTERY_STATUS_CHARGING || battstate == BatteryManager.BATTERY_STATUS_FULL) {
+			final int plugstate = powerstate.getIntExtra(BatteryManager.EXTRA_PLUGGED, BatteryManager.BATTERY_PLUGGED_AC);
+			if(plugstate == BatteryManager.BATTERY_PLUGGED_AC || plugstate == BatteryManager.BATTERY_PLUGGED_USB) {
 				isCharging = true;
 			}
 		}
@@ -201,6 +200,7 @@ public class DisableKeyguardService extends Service {
 					R.string.lockscreen_is_off,
 					showPreferencesIntent);
 		}
+		
 		// Some users don't like the notification so it will not appear but they don't get foregrounding.
 		if(shouldHideNotification()) {
 			foregrounder.beginRemoveForeground();

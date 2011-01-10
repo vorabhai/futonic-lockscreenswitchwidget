@@ -12,7 +12,6 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.widget.RemoteViews;
 
 public class AppWidgetProvider1x1 extends AppWidgetProvider {
@@ -25,7 +24,7 @@ public class AppWidgetProvider1x1 extends AppWidgetProvider {
 
 		// Handle non-appwidget intents.
 		final String action = intent.getAction();
-		Log.i("Action", action);
+
 		if (! AppWidgetManager.ACTION_APPWIDGET_UPDATE.equals(action)) {
 			refreshWidgets(context);
 		}
@@ -49,7 +48,6 @@ public class AppWidgetProvider1x1 extends AppWidgetProvider {
 	}
 
 	public static void UpdateAllWidgets(final Context context, final LockScreenState state) {
-	//final int widgetState, final boolean isLockscreenEnabled) {
 		int i, len;
 		final AppWidgetManager widget_manager = AppWidgetManager.getInstance(context);
 		final int[] ids1x1 = widget_manager.getAppWidgetIds(new ComponentName(context, AppWidgetProvider1x1.class));
@@ -85,8 +83,6 @@ public class AppWidgetProvider1x1 extends AppWidgetProvider {
 		} else {
 			iconId = R.drawable.ic_appwidget_screenlock_off;
 		}
-		
-		Intents.attachUserInvoked(intent);
 
 		final PendingIntent pIntent = PendingIntent.getService(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 		views.setOnClickPendingIntent(R.id.btnKeyguard, pIntent);
