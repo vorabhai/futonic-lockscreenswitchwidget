@@ -1,12 +1,12 @@
 package com.futonredemption.nokeyguard.services;
 
-import org.beryl.app.ServiceForegrounder;
-
+import com.futonredemption.nokeyguard.AutoCancelingForegrounder;
 import com.futonredemption.nokeyguard.Constants;
 import com.futonredemption.nokeyguard.HeadsetStateGetter;
 import com.futonredemption.nokeyguard.Intents;
 import com.futonredemption.nokeyguard.KeyguardLockWrapper;
 import com.futonredemption.nokeyguard.LockScreenState;
+import com.futonredemption.nokeyguard.Preferences;
 import com.futonredemption.nokeyguard.R;
 import com.futonredemption.nokeyguard.StrictModeEnabler;
 import com.futonredemption.nokeyguard.appwidgets.AppWidgetProvider1x1;
@@ -24,7 +24,6 @@ public class DisableKeyguardService extends Service {
 	private Object _commandLock = new Object();
 
 	private KeyguardLockWrapper _wrapper;
-	private ServiceForegrounder _foregrounder = new ServiceForegrounder(this, Constants.NOTIFICATION_ForegroundService);
 	
 	private static final String KeyGuardTag = "KeyguardLockWrapper";
 	
@@ -34,8 +33,11 @@ public class DisableKeyguardService extends Service {
 	public static final String RemoteAction_RefreshWidgets = "RemoteAction_RefreshWidgets";
 	public static final String EXTRA_RemoteAction = "EXTRA_RemoteAction";
 	public static final String EXTRA_ForceNotify = "EXTRA_ForceNotify";
+	public static final String EXTRA_UserInvoked = "EXTRA_UserInvoked";
 
 	final RelayRefreshWidgetReceiver receiver = new RelayRefreshWidgetReceiver();
+	
+	private final AutoCancelingForegrounder foregrounder = new AutoCancelingForegrounder(this);
 
 	@Override
 	public void onCreate() {
@@ -50,6 +52,7 @@ public class DisableKeyguardService extends Service {
 	public void onDestroy() {
 		super.onDestroy();
 
+		foregrounder.stopForeground();
 		RelayRefreshWidgetReceiver.stopReceiver(this, receiver);
 		_wrapper.dispose();
 	}
@@ -80,7 +83,7 @@ public class DisableKeyguardService extends Service {
 	private void handleCommand(final Intent intent) {
 		synchronized (_commandLock) {
 			final String remote_action = intent.getStringExtra(EXTRA_RemoteAction);
-
+			
 			// Backwards compatability. If the old "disable on charging" preference is set then put it to enable keyguard.
 			if (remote_action.equals(RemoteAction_EnableKeyguard) || remote_action.equals(RemoteAction_DisableKeyguardOnCharging)) {
 				onEnableKeyguard();
@@ -179,22 +182,33 @@ public class DisableKeyguardService extends Service {
 		}
 
 		if(enableLockscreen) {
-			_foregrounder.stopForeground();
+			stopForeground();
 		}
 		else {
-			
-			// Some users don't like the notification so it will not appear but they don't get foregrounding.
-			if(getShowNotificationPreference() && ! _foregrounder.isForegrounded()) {
-				final PendingIntent showPreferencesIntent = getShowPreferencesActivity();
-				
-				_foregrounder.startForeground(
-						R.drawable.stat_icon,
-						R.string.lockscreen_is_off,
-						R.string.select_to_configure,
-						R.string.lockscreen_is_off,
-						showPreferencesIntent);
-			}
+			beginForeground();
 		}
+	}
+
+	public void beginForeground() {
+
+		if(! foregrounder.isForegrounded()) {
+			final PendingIntent showPreferencesIntent = getShowPreferencesActivity();
+			
+			foregrounder.startForeground(
+					R.drawable.stat_icon,
+					R.string.lockscreen_is_off,
+					R.string.select_to_configure,
+					R.string.lockscreen_is_off,
+					showPreferencesIntent);
+		}
+		// Some users don't like the notification so it will not appear but they don't get foregrounding.
+		if(shouldHideNotification()) {
+			foregrounder.beginRemoveForeground();
+		}
+	}
+	
+	public void stopForeground() {
+		foregrounder.stopForeground();
 	}
 
 	private PendingIntent getShowPreferencesActivity() {
@@ -221,19 +235,19 @@ public class DisableKeyguardService extends Service {
 		this.stopSelf();
 	}
 
-	private boolean getShowNotificationPreference() {
+	private boolean shouldHideNotification() {
 		final SharedPreferences prefs = getPreferences();
-		return prefs.getBoolean(Constants.Preference_ShowNotification, true);
+		return prefs.getBoolean(Preferences.General.HideNotification, false);
 	}
 	
 	private int getKeyguardEnabledPreference() {
 		final SharedPreferences prefs = getPreferences();
-		return prefs.getInt(Constants.Preference_KeyguardToggle, Constants.MODE_Enabled);
+		return prefs.getInt(Preferences.Internal.ToggleState, Constants.MODE_Enabled);
 	}
 
 	private void setKeyguardTogglePreference(final int param) {
 		final SharedPreferences prefs = getPreferences();
-		prefs.edit().putInt(Constants.Preference_KeyguardToggle, param).commit();
+		prefs.edit().putInt(Preferences.Internal.ToggleState, param).commit();
 	}
 	
 	private SharedPreferences getPreferences() {

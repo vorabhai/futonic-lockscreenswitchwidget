@@ -8,8 +8,7 @@
 			android:enabled="true" android:exported="true"
             android:launchMode="singleTop"
             android:noHistory="true"
-            android:excludeFromRecents="true"
-			/>
+            android:excludeFromRecents="true" />
 		<receiver android:name=".appwidgets.AppWidgetProvider1x1" android:label="@string/widget_label_1x1"
 			android:enabled="true" android:exported="true">
 			<intent-filter>
@@ -27,5 +26,6 @@
 	</application>
 	<uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
 	<uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+	<uses-feature android:name="android.hardware.touchscreen" android:required="false" />
 	<uses-sdk android:minSdkVersion="3" />
 </manifest>

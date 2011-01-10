@@ -85,6 +85,8 @@ public class AppWidgetProvider1x1 extends AppWidgetProvider {
 		} else {
 			iconId = R.drawable.ic_appwidget_screenlock_off;
 		}
+		
+		Intents.attachUserInvoked(intent);
 
 		final PendingIntent pIntent = PendingIntent.getService(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 		views.setOnClickPendingIntent(R.id.btnKeyguard, pIntent);

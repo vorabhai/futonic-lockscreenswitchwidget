@@ -22,11 +22,27 @@ public class Intents {
 		result.putExtra(DisableKeyguardService.EXTRA_ForceNotify, true);
 		return result;
 	}
+	
+	public static final boolean isUserInvoked(final Intent intent) {
+		return intent.getBooleanExtra(DisableKeyguardService.EXTRA_UserInvoked, false);
+	}
+	
+	public static final void attachUserInvoked(final Intent intent) {
+		intent.putExtra(DisableKeyguardService.EXTRA_UserInvoked, true);
+	}
 
+	public static final Intent userInvokedRefreshWidgets(final Context context) {
+		final Intent result = new Intent(context, DisableKeyguardService.class);
+		result.putExtra(DisableKeyguardService.EXTRA_RemoteAction, DisableKeyguardService.RemoteAction_RefreshWidgets);
+		result.putExtra(DisableKeyguardService.EXTRA_ForceNotify, false);
+		return result;
+	}
+	
 	public static final Intent refreshWidgets(final Context context) {
 		final Intent result = new Intent(context, DisableKeyguardService.class);
 		result.putExtra(DisableKeyguardService.EXTRA_RemoteAction, DisableKeyguardService.RemoteAction_RefreshWidgets);
 		result.putExtra(DisableKeyguardService.EXTRA_ForceNotify, false);
+		
 		return result;
 	}
 	
