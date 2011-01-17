@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="app_name">Блокировка экрана коммутатора</string>
+  <string name="app_name">Выключатель экрана блокировки</string>
   <string name="widget_label_1x1">Блокировка экрана коммутатора</string>
   <string name="service_name">Отключение экрана блокировки</string>
   <string name="lockscreen_is">Блокировка экрана является</string>

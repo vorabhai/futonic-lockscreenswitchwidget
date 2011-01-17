@@ -43,7 +43,7 @@ public class DisableKeyguardService extends Service {
 		StrictModeEnabler.setupStrictMode();
 		super.onCreate();
 		
-		RelayRefreshWidgetReceiver.startReceiver(this, receiver);
+		//RelayRefreshWidgetReceiver.startReceiver(this, receiver);
 		_wrapper = new KeyguardLockWrapper(this, KeyGuardTag);
 	}
 
@@ -52,7 +52,7 @@ public class DisableKeyguardService extends Service {
 		super.onDestroy();
 
 		foregrounder.stopForeground();
-		RelayRefreshWidgetReceiver.stopReceiver(this, receiver);
+		//RelayRefreshWidgetReceiver.stopReceiver(this, receiver);
 		_wrapper.dispose();
 	}
 
@@ -83,7 +83,7 @@ public class DisableKeyguardService extends Service {
 		synchronized (_commandLock) {
 			final String remote_action = intent.getStringExtra(EXTRA_RemoteAction);
 			
-			// Backwards compatability. If the old "disable on charging" preference is set then put it to enable keyguard.
+			// Backwards compatibility. If the old "disable on charging" preference is set then put it to enable keyguard.
 			if (remote_action.equals(RemoteAction_EnableKeyguard) || remote_action.equals(RemoteAction_DisableKeyguardOnCharging)) {
 				onEnableKeyguard();
 			} else if (remote_action.equals(RemoteAction_DisableKeyguard)) {
@@ -119,8 +119,8 @@ public class DisableKeyguardService extends Service {
 		final SharedPreferences prefs = getPreferences();
 		
 		boolean prefActivateOnlyWhenCharging = prefs.getBoolean("PrefActivateOnlyWhenCharging", false);
-		boolean prefActivateOnlyWhenHeadphonesPluggedIn = prefs.getBoolean("PrefActivateOnlyWhenHeadphonesPluggedIn", false);
-		boolean prefActivateOnlyWhenDocked = prefs.getBoolean("PrefActivateOnlyWhenDocked", false);
+		boolean prefActivateOnlyWhenHeadphonesPluggedIn = false; //prefs.getBoolean("PrefActivateOnlyWhenHeadphonesPluggedIn", false);
+		boolean prefActivateOnlyWhenDocked = false; //prefs.getBoolean("PrefActivateOnlyWhenDocked", false);
 		
 		// Assume that the lock will be disabled.
 		state.Mode = Constants.MODE_Disabled;
