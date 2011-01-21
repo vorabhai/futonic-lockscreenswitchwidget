@@ -2,11 +2,10 @@ package com.futonredemption.nokeyguard.services;
 
 import com.futonredemption.nokeyguard.AutoCancelingForegrounder;
 import com.futonredemption.nokeyguard.Constants;
-import com.futonredemption.nokeyguard.HeadsetStateGetter;
 import com.futonredemption.nokeyguard.Intents;
 import com.futonredemption.nokeyguard.KeyguardLockWrapper;
 import com.futonredemption.nokeyguard.LockScreenState;
-import com.futonredemption.nokeyguard.Preferences;
+import com.futonredemption.nokeyguard.LockScreenStateManager;
 import com.futonredemption.nokeyguard.R;
 import com.futonredemption.nokeyguard.StrictModeEnabler;
 import com.futonredemption.nokeyguard.appwidgets.AppWidgetProvider1x1;
@@ -15,10 +14,7 @@ import com.futonredemption.nokeyguard.receivers.RelayRefreshWidgetReceiver;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.BatteryManager;
 import android.os.IBinder;
-import android.preference.PreferenceManager;
 
 public class DisableKeyguardService extends Service {
 	private Object _commandLock = new Object();
@@ -37,6 +33,8 @@ public class DisableKeyguardService extends Service {
 	final RelayRefreshWidgetReceiver receiver = new RelayRefreshWidgetReceiver();
 	
 	private final AutoCancelingForegrounder foregrounder = new AutoCancelingForegrounder(this);
+	private final LockScreenStateManager lockStateManager = new LockScreenStateManager(this);
+	
 
 	@Override
 	public void onCreate() {
@@ -97,12 +95,12 @@ public class DisableKeyguardService extends Service {
 	private void updateAllWidgets() {
 		final LockScreenState state = new LockScreenState();
 		
-		state.Mode = getKeyguardEnabledPreference();
+		state.Mode = lockStateManager.getKeyguardEnabledPreference();
 
 		if (state.Mode == Constants.MODE_Enabled) {
 			state.IsLockActive = true;
 		} else {
-			determineIfLockShouldBeDeactivated(state);
+			lockStateManager.determineIfLockShouldBeDeactivated(state);
 		}
 		
 		if(state.IsLockActive) {
@@ -115,55 +113,6 @@ public class DisableKeyguardService extends Service {
 		AppWidgetProvider1x1.UpdateAllWidgets(this, state);
 	}
 
-	private void determineIfLockShouldBeDeactivated(final LockScreenState state) {
-		final SharedPreferences prefs = getPreferences();
-		
-		boolean prefActivateOnlyWhenCharging = prefs.getBoolean("PrefActivateOnlyWhenCharging", false);
-		boolean prefActivateOnlyWhenHeadphonesPluggedIn = false; //prefs.getBoolean("PrefActivateOnlyWhenHeadphonesPluggedIn", false);
-		boolean prefActivateOnlyWhenDocked = false; //prefs.getBoolean("PrefActivateOnlyWhenDocked", false);
-		
-		// Assume that the lock will be disabled.
-		state.Mode = Constants.MODE_Disabled;
-		state.IsLockActive = false;
-		
-		if(prefActivateOnlyWhenCharging || prefActivateOnlyWhenHeadphonesPluggedIn || prefActivateOnlyWhenDocked) {
-			
-			// Since we have a restriction we need to build an or case against it to see if the lock really should be disabled.
-			state.Mode = Constants.MODE_ConditionalToggle;
-			state.IsLockActive = true;
-
-			if(prefActivateOnlyWhenCharging) {
-				if(isSystemCharging()) {
-					state.IsLockActive = false;
-				}
-			}
-			
-			if(prefActivateOnlyWhenHeadphonesPluggedIn) {
-				if(isHeadsetPluggedIn()) {
-					state.IsLockActive = false;
-				}
-			}
-		}
-	}
-	
-	private boolean isSystemCharging() {
-		boolean isCharging = false;
-		final Intent powerstate = Intents.getBatteryState(this);
-		if (powerstate != null) {
-			final int plugstate = powerstate.getIntExtra(BatteryManager.EXTRA_PLUGGED, BatteryManager.BATTERY_PLUGGED_AC);
-			if(plugstate == BatteryManager.BATTERY_PLUGGED_AC || plugstate == BatteryManager.BATTERY_PLUGGED_USB) {
-				isCharging = true;
-			}
-		}
-
-		return isCharging;
-	}
-	
-	private boolean isHeadsetPluggedIn() {
-		final HeadsetStateGetter getter = new HeadsetStateGetter(this);
-		return getter.isHeadsetPluggedIn();
-	}
-	
 	private void disableLockscreen() {
 		setLockscreenMode(false);
 	}
@@ -202,7 +151,7 @@ public class DisableKeyguardService extends Service {
 		}
 		
 		// Some users don't like the notification so it will not appear but they don't get foregrounding.
-		if(shouldHideNotification()) {
+		if(lockStateManager.shouldHideNotification()) {
 			foregrounder.beginRemoveForeground();
 		}
 	}
@@ -220,12 +169,12 @@ public class DisableKeyguardService extends Service {
 	}
 
 	private void onDisableKeyguard() {
-		setKeyguardTogglePreference(Constants.MODE_Disabled);
+		lockStateManager.setKeyguardTogglePreference(Constants.MODE_Disabled);
 		updateAllWidgets();
 	}
 
 	private void onEnableKeyguard() {
-		setKeyguardTogglePreference(Constants.MODE_Enabled);
+		lockStateManager.setKeyguardTogglePreference(Constants.MODE_Enabled);
 		updateAllWidgets();
 		destroyKeyguard();
 	}
@@ -233,24 +182,5 @@ public class DisableKeyguardService extends Service {
 	private void destroyKeyguard() {
 		_wrapper.dispose();
 		this.stopSelf();
-	}
-
-	private boolean shouldHideNotification() {
-		final SharedPreferences prefs = getPreferences();
-		return prefs.getBoolean(Preferences.General.HideNotification, false);
-	}
-	
-	private int getKeyguardEnabledPreference() {
-		final SharedPreferences prefs = getPreferences();
-		return prefs.getInt(Preferences.Internal.ToggleState, Constants.MODE_Enabled);
-	}
-
-	private void setKeyguardTogglePreference(final int param) {
-		final SharedPreferences prefs = getPreferences();
-		prefs.edit().putInt(Preferences.Internal.ToggleState, param).commit();
-	}
-	
-	private SharedPreferences getPreferences() {
-		return PreferenceManager.getDefaultSharedPreferences(this);
 	}
 }

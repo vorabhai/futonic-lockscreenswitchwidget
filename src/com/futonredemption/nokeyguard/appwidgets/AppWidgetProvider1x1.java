@@ -63,18 +63,18 @@ public class AppWidgetProvider1x1 extends AppWidgetProvider {
 
 		views = new RemoteViews(context.getPackageName(), R.layout.appwidget_1x1);
 
-		Intent intent = null;
+		Intent toggleIntent = null;
 		int iconId = 0;
 		int indicatorId = 0;
 
 		if (state.Mode == Constants.MODE_Disabled) {
-			intent = Intents.enableKeyguard(context);
+			toggleIntent = Intents.enableKeyguard(context);
 			indicatorId = R.drawable.appwidget_settings_ind_off_single;
 		} else if (state.Mode == Constants.MODE_ConditionalToggle) {
-			intent = Intents.enableKeyguard(context);
+			toggleIntent = Intents.enableKeyguard(context);
 			indicatorId = R.drawable.appwidget_settings_ind_mid_single;
 		} else {
-			intent = Intents.disableKeyguard(context);
+			toggleIntent = Intents.disableKeyguard(context);
 			indicatorId = R.drawable.appwidget_settings_ind_on_single;
 		}
 
@@ -84,8 +84,11 @@ public class AppWidgetProvider1x1 extends AppWidgetProvider {
 			iconId = R.drawable.ic_appwidget_screenlock_off;
 		}
 
-		final PendingIntent pIntent = PendingIntent.getService(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-		views.setOnClickPendingIntent(R.id.btnKeyguard, pIntent);
+		final Intent showPrefsIntent = Intents.showPreferencesActivity(context);
+		final PendingIntent pToggleIntent = PendingIntent.getService(context, 0, toggleIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+		final PendingIntent pShowPrefsIntent = PendingIntent.getActivity(context, 0, showPrefsIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+		views.setOnClickPendingIntent(R.id.imgKeyguard, pToggleIntent);
+		views.setOnClickPendingIntent(R.id.indKeyguard, pShowPrefsIntent);
 		views.setImageViewResource(R.id.imgKeyguard, iconId);
 		views.setImageViewResource(R.id.indKeyguard, indicatorId);
 		widgetManager.updateAppWidget(widgetId, views);

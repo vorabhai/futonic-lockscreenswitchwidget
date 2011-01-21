@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Lock Screen Switch</string>
-    <string name="widget_label_1x1">Lock Screen Switch</string>
-    <string name="service_name">Lock Screen Disable</string>
-    <string name="lockscreen_is_off">Lock Screen is Off</string>
+    <string name="app_name">Lock Screen Disabler</string>
+    <string name="widget_label_1x1">Lock Screen Disabler</string>
+    <string name="service_name">Lock Screen Disabler</string>
+    <string name="lockscreen_is_off">Lock Screen is <b>Disabled</b></string>
     <string name="select_to_configure">Select to change settings.</string>
-    <string name="activity_preferences">Lock Screen Switch Settings</string>
+    <string name="activity_preferences">Lock Screen Disabler Settings</string>
     
     <string name="PrefCategory_Options">General</string>
     
