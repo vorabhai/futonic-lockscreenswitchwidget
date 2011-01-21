@@ -6,6 +6,7 @@
     <string name="lockscreen_is_off">Lock Screen is <b>Disabled</b></string>
     <string name="select_to_configure">Select to change settings.</string>
     <string name="activity_preferences">Lock Screen Disabler Settings</string>
+    <string name="tap_to_turn_on">Select to <b>re-enable</b>.</string>
     
     <string name="PrefCategory_Options">General</string>
     

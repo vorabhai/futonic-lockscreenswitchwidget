@@ -43,24 +43,40 @@ public class AutoCancelingForegrounder {
 		}
 	}
 	
-	public void beginRemoveForeground() {
-		synchronized(foregrounder) {
-			cancelRemoveForeground();
-			pendingStopForegroundTimer = new Timer();
-			pendingStopForeground = new TimerTask() {		
+	public void beginChangeAction(final int resIconId, final int title, final int description, final int tickerText, final PendingIntent onClickIntent) {
+		queueTask(new TimerTask() {		
 				@Override
 				public void run() {
 					synchronized(foregrounder) {
-						foregrounder.stopForeground();
-						cancelRemoveForeground();
+						foregrounder.startForeground(resIconId, title, description, tickerText, onClickIntent);
+						cancelCurrentTask();
 					}
 				}
-			};
+		});
+	}
+	
+	private void queueTask(TimerTask task) {
+		synchronized(foregrounder) {
+			cancelCurrentTask();
+			pendingStopForegroundTimer = new Timer();
+			pendingStopForeground = task;
 			pendingStopForegroundTimer.schedule(pendingStopForeground, Constants.INTERVAL_ForegroundTimeout);
 		}
 	}
+
+	public void beginRemoveForeground() {
+		queueTask(new TimerTask() {		
+			@Override
+			public void run() {
+				synchronized(foregrounder) {
+					foregrounder.stopForeground();
+					cancelCurrentTask();
+				}
+			}
+		});
+	}
 	
-	public void cancelRemoveForeground() {
+	public void cancelCurrentTask() {
 		synchronized(foregrounder) {
 			if(pendingStopForegroundTimer != null) {
 				try {

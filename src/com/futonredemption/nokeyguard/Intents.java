@@ -49,8 +49,16 @@ public class Intents {
 	}
 	
 
-	public static PendingIntent showPreferencesPendingActivity(final Context context) {
+	public static PendingIntent pendingShowPreferencesActivity(final Context context) {
 		return PendingIntent.getActivity(context, 0, Intents.showPreferencesActivity(context), PendingIntent.FLAG_UPDATE_CURRENT);
+	}
+
+	public static PendingIntent pendingEnableKeyguard(Context context) {
+		return PendingIntent.getService(context, 0, Intents.enableKeyguard(context), PendingIntent.FLAG_UPDATE_CURRENT);
+	}
+
+	public static PendingIntent pendingDisableKeyguard(Context context) {
+		return PendingIntent.getService(context, 0, Intents.disableKeyguard(context), PendingIntent.FLAG_UPDATE_CURRENT);
 	}
 
 }

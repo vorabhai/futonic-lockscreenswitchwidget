@@ -11,7 +11,6 @@ import com.futonredemption.nokeyguard.StrictModeEnabler;
 import com.futonredemption.nokeyguard.appwidgets.AppWidgetProvider1x1;
 import com.futonredemption.nokeyguard.receivers.RelayRefreshWidgetReceiver;
 
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
@@ -140,19 +139,25 @@ public class DisableKeyguardService extends Service {
 	public void beginForeground() {
 
 		if(! foregrounder.isForegrounded()) {
-			final PendingIntent showPreferencesIntent = Intents.showPreferencesPendingActivity(this);
 			
 			foregrounder.startForeground(
 					R.drawable.stat_icon,
 					R.string.lockscreen_is_off,
 					R.string.select_to_configure,
 					R.string.lockscreen_is_off,
-					showPreferencesIntent);
+					Intents.pendingShowPreferencesActivity(this));
 		}
 		
 		// Some users don't like the notification so it will not appear but they don't get foregrounding.
 		if(lockStateManager.shouldHideNotification()) {
 			foregrounder.beginRemoveForeground();
+		} else {
+			foregrounder.beginChangeAction(
+					R.drawable.stat_icon,
+					R.string.lockscreen_is_off,
+					R.string.tap_to_turn_on,
+					R.string.lockscreen_is_off,
+					Intents.pendingEnableKeyguard(this));
 		}
 	}
 	
