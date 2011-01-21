@@ -3,6 +3,7 @@ package com.futonredemption.nokeyguard;
 import com.futonredemption.nokeyguard.activities.NoKeyguardPreferenceActivity;
 import com.futonredemption.nokeyguard.services.DisableKeyguardService;
 
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -46,4 +47,10 @@ public class Intents {
 	public static final Intent getBatteryState(final Context context) {
 		return context.registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
 	}
+	
+
+	public static PendingIntent showPreferencesPendingActivity(final Context context) {
+		return PendingIntent.getActivity(context, 0, Intents.showPreferencesActivity(context), PendingIntent.FLAG_UPDATE_CURRENT);
+	}
+
 }

@@ -84,9 +84,8 @@ public class AppWidgetProvider1x1 extends AppWidgetProvider {
 			iconId = R.drawable.ic_appwidget_screenlock_off;
 		}
 
-		final Intent showPrefsIntent = Intents.showPreferencesActivity(context);
 		final PendingIntent pToggleIntent = PendingIntent.getService(context, 0, toggleIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-		final PendingIntent pShowPrefsIntent = PendingIntent.getActivity(context, 0, showPrefsIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+		final PendingIntent pShowPrefsIntent = Intents.showPreferencesPendingActivity(context);
 		views.setOnClickPendingIntent(R.id.imgKeyguard, pToggleIntent);
 		views.setOnClickPendingIntent(R.id.indKeyguard, pShowPrefsIntent);
 		views.setImageViewResource(R.id.imgKeyguard, iconId);

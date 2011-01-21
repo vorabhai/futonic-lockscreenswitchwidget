@@ -140,7 +140,7 @@ public class DisableKeyguardService extends Service {
 	public void beginForeground() {
 
 		if(! foregrounder.isForegrounded()) {
-			final PendingIntent showPreferencesIntent = getShowPreferencesActivity();
+			final PendingIntent showPreferencesIntent = Intents.showPreferencesPendingActivity(this);
 			
 			foregrounder.startForeground(
 					R.drawable.stat_icon,
@@ -158,10 +158,6 @@ public class DisableKeyguardService extends Service {
 	
 	public void stopForeground() {
 		foregrounder.stopForeground();
-	}
-
-	private PendingIntent getShowPreferencesActivity() {
-		return PendingIntent.getActivity(this, 0, Intents.showPreferencesActivity(this), PendingIntent.FLAG_UPDATE_CURRENT);
 	}
 
 	private void onRefreshWidgets() {
