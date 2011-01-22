@@ -1,10 +1,35 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="app_name">Выключатель экрана блокировки</string>
-  <string name="widget_label_1x1">Блокировка экрана коммутатора</string>
-  <string name="service_name">Отключение экрана блокировки</string>
-  <string name="lockscreen_is">Блокировка экрана является</string>
-  <string name="off">выключение</string>
-  <string name="on">на</string>
-  <string name="lock_screen_is_disabled_while_charging">Самоблокирующиеся зарядки.</string>
+    <string name="app_name">Отключатель экрана блокировки</string>
+    <string name="widget_label_1x1">Отключатель экрана блокировки</string>
+    <string name="service_name">Отключатель экрана блокировки</string>
+    <string name="lockscreen_is_off">Экран блокировки <b>выключен</b></string>
+    <string name="select_to_configure">Выберите для изменения настроек.</string>
+    <string name="activity_preferences">Настрйки отключателя экрана блокировки</string>
+    <string name="tap_to_turn_on">Выберите, чтобы <b>включить</b>.</string>
+    
+    <string name="PrefCategory_Options">Общие</string>
+    
+    <string name="PrefTitle_PrefHideNotification">Не показывать уведомление</string>
+    <string name="PrefDesc_PrefHideNotification">Уведомление пропадет через 5 сек после включения. (экспериментально)</string>
+    
+    <string name="PrefCategory_ActivateOnly">Правила</string>
+    
+    <string name="PrefTitle_PrefActivateOnlyWhenCharging">Отключать во время зарядки</string>
+    <string name="PrefDesc_PrefActivateOnlyWhenCharging">Экран блокировки не выводится во время зарядки</string>
+    
+    <string name="PrefTitle_PrefActivateOnlyWhenHeadphonesPluggedIn">Отключать при подключенной гарнитурой</string>
+    <string name="PrefDesc_PrefActivateOnlyWhenHeadphonesPluggedIn">Экран блокировки не выводится при подключенной гарнитуре.</string>
+    
+    <string name="PrefTitle_PrefActivateOnlyWhenDocked">Отключать в докстанции</string>
+    <string name="PrefDesc_PrefActivateOnlyWhenDocked">Экран блокировки не выводится при нахождении докстанции.</string>
+    
+    <string name="PrefCategory_PreventActivationOn">Не разблокировать по...</string>
+
+	<string name="PrefTitle_PreventActivationOnCameraButton">Кнопке 'Камера'</string>
+    <string name="PrefDesc_PreventActivationOnCameraButton">Не разблокировать по кнопке Камера.</string>
+    
+    <string name="PrefTitle_PreventActivationOnCallButton">Кнопке 'Вызов'</string>
+    <string name="PrefDesc_PreventActivationOnCallButton">Не разблокировать по кнопке 'Вызов'.</string>
+    
 </resources>
