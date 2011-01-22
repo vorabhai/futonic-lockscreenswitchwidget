@@ -26,10 +26,10 @@
     
     <string name="PrefCategory_PreventActivationOn">Не разблокировать по...</string>
 
-	<string name="PrefTitle_PreventActivationOnCameraButton">Кнопке 'Камера'</string>
+	<string name="PrefTitle_PreventActivationOnCameraButton">Кнопке \'Камера\'</string>
     <string name="PrefDesc_PreventActivationOnCameraButton">Не разблокировать по кнопке Камера.</string>
     
-    <string name="PrefTitle_PreventActivationOnCallButton">Кнопке 'Вызов'</string>
-    <string name="PrefDesc_PreventActivationOnCallButton">Не разблокировать по кнопке 'Вызов'.</string>
+    <string name="PrefTitle_PreventActivationOnCallButton">Кнопке \'Вызов\'</string>
+    <string name="PrefDesc_PreventActivationOnCallButton">Не разблокировать по кнопке \'Вызов\'.</string>
     
 </resources>
