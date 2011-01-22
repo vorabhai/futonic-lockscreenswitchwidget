@@ -15,10 +15,6 @@
 				<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
 				<action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
 				<action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
-				<!-- 
-				<action android:name="android.intent.action.CAMERA_BUTTON" />
-				<action android:name="android.intent.action.CALL_BUTTON" />
-				 -->
 			</intent-filter>
 			<meta-data android:name="android.appwidget.provider"
 				android:resource="@xml/appwidget_1x1" />
@@ -26,8 +22,8 @@
 		<service android:exported="true" android:name=".services.DisableKeyguardService"
 			android:label="@string/service_name" android:enabled="true" />
 	</application>
+	
 	<uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
-	<!--  <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" /> -->
 	<uses-feature android:name="android.hardware.touchscreen" android:required="false" />
 	<uses-sdk android:minSdkVersion="3" />
 </manifest>

@@ -87,6 +87,8 @@ public class DisableKeyguardService extends Service {
 				onDisableKeyguard();
 			} else if (remote_action.equals(RemoteAction_RefreshWidgets)) {
 				onRefreshWidgets();
+			} else { /* On all else fails just refresh the widgets. */
+				onRefreshWidgets();
 			}
 		}
 	}
