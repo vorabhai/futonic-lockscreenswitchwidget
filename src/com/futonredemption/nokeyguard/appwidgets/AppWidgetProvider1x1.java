@@ -4,7 +4,6 @@ import com.futonredemption.nokeyguard.Constants;
 import com.futonredemption.nokeyguard.Intents;
 import com.futonredemption.nokeyguard.LockScreenState;
 import com.futonredemption.nokeyguard.R;
-import com.futonredemption.nokeyguard.StrictModeEnabler;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -17,7 +16,6 @@ import android.widget.RemoteViews;
 public class AppWidgetProvider1x1 extends AppWidgetProvider {
 	
 	public void onReceive(Context context, Intent intent) {
-		StrictModeEnabler.setupStrictMode();
 		
 		// Handle the basic AppWidget intents.
 		super.onReceive(context, intent);
@@ -32,7 +30,6 @@ public class AppWidgetProvider1x1 extends AppWidgetProvider {
 
 	@Override
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-		StrictModeEnabler.setupStrictMode();
 		super.onUpdate(context, appWidgetManager, appWidgetIds);
 
 		refreshWidgets(context);

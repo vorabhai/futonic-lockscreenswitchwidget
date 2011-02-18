@@ -37,10 +37,14 @@ public class KeyguardLockWrapper {
 		return performedAction;
 	}
 
+	public boolean isKeyguardDisabled() {
+		return !_isDisposed && !_isKeyguardEnabled;
+	}
+	
 	public boolean enableKeyguard() {
 		boolean performedAction = false;
 
-		if (!_isDisposed && !_isKeyguardEnabled) {
+		if (isKeyguardDisabled()) {
 			_keyguardLock.reenableKeyguard();
 			_isKeyguardEnabled = true;
 			performedAction = true;

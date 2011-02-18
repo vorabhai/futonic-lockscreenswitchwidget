@@ -7,7 +7,6 @@ import com.futonredemption.nokeyguard.KeyguardLockWrapper;
 import com.futonredemption.nokeyguard.LockScreenState;
 import com.futonredemption.nokeyguard.LockScreenStateManager;
 import com.futonredemption.nokeyguard.R;
-import com.futonredemption.nokeyguard.StrictModeEnabler;
 import com.futonredemption.nokeyguard.appwidgets.AppWidgetProvider1x1;
 import com.futonredemption.nokeyguard.receivers.RelayRefreshWidgetReceiver;
 
@@ -37,7 +36,6 @@ public class DisableKeyguardService extends Service {
 
 	@Override
 	public void onCreate() {
-		StrictModeEnabler.setupStrictMode();
 		super.onCreate();
 		
 		//RelayRefreshWidgetReceiver.startReceiver(this, receiver);
@@ -169,6 +167,11 @@ public class DisableKeyguardService extends Service {
 
 	private void onRefreshWidgets() {
 		updateAllWidgets();
+		
+		// HACK: Sometimes this is called when it shouldn't. Always check to see if the lock is active otherwise quit.
+		if(_wrapper.isKeyguardDisabled()) {
+			destroyKeyguard();
+		}
 	}
 
 	private void onDisableKeyguard() {
