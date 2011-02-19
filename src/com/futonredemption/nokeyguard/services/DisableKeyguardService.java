@@ -169,7 +169,7 @@ public class DisableKeyguardService extends Service {
 		updateAllWidgets();
 		
 		// HACK: Sometimes this is called when it shouldn't. Always check to see if the lock is active otherwise quit.
-		if(_wrapper.isKeyguardDisabled()) {
+		if(! _wrapper.isKeyguardDisabled()) {
 			destroyKeyguard();
 		}
 	}
