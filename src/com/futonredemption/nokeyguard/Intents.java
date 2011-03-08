@@ -1,6 +1,6 @@
 package com.futonredemption.nokeyguard;
 
-import com.futonredemption.nokeyguard.activities.NoKeyguardPreferenceActivity;
+import com.futonredemption.nokeyguard.activities.LockScreenActivity;
 import com.futonredemption.nokeyguard.services.DisableKeyguardService;
 
 import android.app.PendingIntent;
@@ -40,7 +40,7 @@ public class Intents {
 	}
 	
 	public static final Intent showPreferencesActivity(final Context context) {
-		final Intent result = new Intent(context, NoKeyguardPreferenceActivity.class);
+		final Intent result = new Intent(context, LockScreenActivity.class);
 		return result;
 	}
 	
@@ -59,6 +59,18 @@ public class Intents {
 
 	public static PendingIntent pendingDisableKeyguard(Context context) {
 		return PendingIntent.getService(context, 0, Intents.disableKeyguard(context), PendingIntent.FLAG_UPDATE_CURRENT);
+	}
+	
+	public static final String ACTION_LOCKSTATE = "com.futonredemption.nokeyguard.lockstate";
+	
+	public static IntentFilter broadcastLockStateIntentFilter() {
+		return new IntentFilter(ACTION_LOCKSTATE);
+	}
+	public static Intent broadcastLockState(final LockScreenState state) {
+		final Intent intent = new Intent(ACTION_LOCKSTATE);
+		intent.putExtra("isActive", state.IsLockActive);
+		intent.putExtra("mode", state.Mode);
+		return intent;
 	}
 
 }

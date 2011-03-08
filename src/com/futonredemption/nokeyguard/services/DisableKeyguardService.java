@@ -109,7 +109,12 @@ public class DisableKeyguardService extends Service {
 			disableLockscreen();
 		}
 
+		broadcastState(state);
 		AppWidgetProvider1x1.UpdateAllWidgets(this, state);
+	}
+
+	private void broadcastState(LockScreenState state) {
+		this.sendBroadcast(Intents.broadcastLockState(state));
 	}
 
 	private void disableLockscreen() {
