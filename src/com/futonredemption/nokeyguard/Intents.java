@@ -1,6 +1,6 @@
 package com.futonredemption.nokeyguard;
 
-import com.futonredemption.nokeyguard.activities.LockScreenActivity;
+import com.futonredemption.nokeyguard.activities.NoKeyguardPreferenceActivity;
 import com.futonredemption.nokeyguard.services.DisableKeyguardService;
 
 import android.app.PendingIntent;
@@ -40,7 +40,7 @@ public class Intents {
 	}
 	
 	public static final Intent showPreferencesActivity(final Context context) {
-		final Intent result = new Intent(context, LockScreenActivity.class);
+		final Intent result = new Intent(context, NoKeyguardPreferenceActivity.class);
 		return result;
 	}
 	

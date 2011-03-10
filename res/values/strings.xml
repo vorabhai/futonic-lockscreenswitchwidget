@@ -7,6 +7,7 @@
     <string name="activity_preferences">No Lock Screen Settings</string>
     <string name="select_to_configure">Select to <b>change settings</b>.</string>
     <string name="tap_to_turn_on">Select to <b>re-enable lock screen</b>.</string>
+    <string name="preferences">Preferences</string>
     
     <string name="PrefCategory_Options">General</string>
     
