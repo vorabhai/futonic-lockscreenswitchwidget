@@ -13,10 +13,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class LockScreenActivity extends Activity {
 
+	public ImageView BackgroundGlowImageView;
 	public ImageButton ToggleLockButton;
 	public TextView StatusTextView;
 	public Button PreferencesButton;
@@ -29,6 +31,7 @@ public class LockScreenActivity extends Activity {
 	}
 
 	private void getViews() {
+		BackgroundGlowImageView = (ImageView)findViewById(R.id.BackgroundGlowImageView);
 		ToggleLockButton = (ImageButton)findViewById(R.id.ToggleLockButton);
 		StatusTextView = (TextView)findViewById(R.id.StatusTextView);
 		ToggleLockButton.setOnClickListener(new OnClickListener() {
@@ -65,9 +68,11 @@ public class LockScreenActivity extends Activity {
 			StringBuilder sb = new StringBuilder();
 			
 			if(isLockActive) {
+				BackgroundGlowImageView.setImageResource(R.drawable.active_lock_glow);
 				ToggleLockButton.setImageResource(R.drawable.active_lock);
 				sb.append("Lock Screen is Active");
 			} else {
+				BackgroundGlowImageView.setImageResource(R.drawable.inactive_lock_glow);
 				ToggleLockButton.setImageResource(R.drawable.inactive_lock);
 				sb.append("Lock Screen is Not Active");
 			}

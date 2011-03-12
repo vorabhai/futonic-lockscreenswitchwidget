@@ -8,16 +8,25 @@ import android.preference.PreferenceActivity;
 
 public class NoKeyguardPreferenceActivity extends PreferenceActivity {
 
+	private boolean isChangingConfiguration = false;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.pref_main);
 	}
+	
+	@Override
+	public Object onRetainNonConfigurationInstance() {
+		isChangingConfiguration = true;
+		return super.onRetainNonConfigurationInstance();
+	}
 
 	@Override
-	public void onPause() {
-		super.onPause();
-		if(! isChangingConfigurations()) {
+	public void onDestroy() {
+		super.onDestroy();
+		
+		if(! isChangingConfiguration) {
 			this.startService(Intents.refreshWidgets(this));
 			finish();
 		}

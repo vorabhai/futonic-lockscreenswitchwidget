@@ -1,21 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
-	android:layout_height="fill_parent"
-	android:orientation="vertical">
-	<ImageButton android:id="@+id/ToggleLockButton"
-  		android:layout_width="fill_parent" android:layout_height="@dimen/use_weight"
-  		android:layout_weight="70"
-  		android:background="@android:color/transparent"
-  		android:src="@drawable/active_lock" />
-  	<TextView android:id="@+id/StatusTextView"
-  		android:layout_width="fill_parent" android:layout_height="@dimen/use_weight"
-  		android:layout_weight="15" 
-  		android:text="Enabled"
-  		android:gravity="center" />
-  	<Button android:id="@+id/PreferencesButton"
-  		android:layout_width="fill_parent" android:layout_height="@dimen/use_weight"
-  		android:layout_weight="15" 
-  		android:text="@string/preferences"
-  		android:gravity="center" />
-</LinearLayout>
+	android:layout_height="fill_parent">
+	<ImageView android:id="@+id/BackgroundGlowImageView"
+		android:src="@drawable/active_lock_glow"
+		android:layout_height="fill_parent"
+		android:layout_width="fill_parent"
+		android:scaleType="fitXY"
+		/>
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:orientation="vertical">
+		<ImageButton android:id="@+id/ToggleLockButton"
+	  		android:layout_width="fill_parent" android:layout_height="@dimen/use_weight"
+	  		android:layout_weight="70"
+	  		android:background="@android:color/transparent"
+	  		android:src="@drawable/active_lock"
+	  		android:scaleType="centerInside" />
+	  	<TextView android:id="@+id/StatusTextView"
+	  		android:layout_width="fill_parent" android:layout_height="@dimen/use_weight"
+	  		android:layout_weight="15"
+	  		style="@style/StatusText"
+	  		android:text="Loading..." />
+	  	<Button android:id="@+id/PreferencesButton"
+	  		android:layout_width="fill_parent" android:layout_height="@dimen/use_weight"
+	  		android:layout_weight="15" 
+	  		android:text="@string/preferences"
+	  		android:gravity="center" />
+	</LinearLayout>
+</FrameLayout>
