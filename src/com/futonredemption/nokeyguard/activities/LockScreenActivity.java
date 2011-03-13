@@ -8,8 +8,10 @@ import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -27,7 +29,13 @@ public class LockScreenActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		setWindowMode();
 		getViews();
+	}
+
+	private void setWindowMode() {
+		Window window = getWindow();
+		window.setFormat(PixelFormat.RGBA_8888);
 	}
 
 	private void getViews() {
@@ -68,11 +76,11 @@ public class LockScreenActivity extends Activity {
 			StringBuilder sb = new StringBuilder();
 			
 			if(isLockActive) {
-				BackgroundGlowImageView.setImageResource(R.drawable.active_lock_glow);
+				BackgroundGlowImageView.setImageResource(R.drawable.bg_glow_white);
 				ToggleLockButton.setImageResource(R.drawable.active_lock);
 				sb.append("Lock Screen is Active");
 			} else {
-				BackgroundGlowImageView.setImageResource(R.drawable.inactive_lock_glow);
+				BackgroundGlowImageView.setImageResource(R.drawable.bg_glow_blue);
 				ToggleLockButton.setImageResource(R.drawable.inactive_lock);
 				sb.append("Lock Screen is Not Active");
 			}
