@@ -21,16 +21,16 @@
         <receiver android:enabled="true" android:exported="true"
             android:label="@string/widget_label_1x1" android:name=".appwidgets.AppWidgetProvider1x1">
             <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
-                <action android:name="android.intent.action.ACTION_POWER_CONNECTED"/>
-                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED"/>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
             </intent-filter>
-            <meta-data android:name="android.appwidget.provider" android:resource="@xml/appwidget_1x1"/>
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/appwidget_1x1" />
         </receiver>
         <service android:enabled="true" android:exported="true"
-            android:label="@string/service_name" android:name=".services.DisableKeyguardService"/>
+            android:label="@string/service_name" android:name=".services.DisableKeyguardService" />
     </application>
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
-    <uses-feature android:name="android.hardware.touchscreen" android:required="false"/>
-    <uses-sdk android:minSdkVersion="3" android:targetSdkVersion="11"/>
+    <uses-feature android:name="android.hardware.touchscreen" android:required="false" />
+    <uses-sdk android:minSdkVersion="4" android:targetSdkVersion="11"/>
 </manifest>
