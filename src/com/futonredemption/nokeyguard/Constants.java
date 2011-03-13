@@ -7,5 +7,5 @@ public class Constants {
 	
 	public static final int NOTIFICATION_ForegroundService = 1;
 	
-	public static final int INTERVAL_ForegroundTimeout = 5000;
+	public static final int INTERVAL_ForegroundTimeout = 1000;
 }
