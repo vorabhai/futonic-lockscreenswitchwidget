@@ -25,6 +25,7 @@ public class DisableKeyguardService extends Service {
 	public static final String RemoteAction_DisableKeyguard = "RemoteAction_DisableKeyguard";
 	public static final String RemoteAction_DisableKeyguardOnCharging = "RemoteAction_DisableKeyguardOnCharging";
 	public static final String RemoteAction_RefreshWidgets = "RemoteAction_RefreshWidgets";
+	public static final String RemoteAction_NotifyState = "RemoteAction_NotifyState";
 	public static final String EXTRA_RemoteAction = "EXTRA_RemoteAction";
 	public static final String EXTRA_ForceNotify = "EXTRA_ForceNotify";
 
@@ -85,22 +86,16 @@ public class DisableKeyguardService extends Service {
 				onDisableKeyguard();
 			} else if (remote_action.equals(RemoteAction_RefreshWidgets)) {
 				onRefreshWidgets();
-			} else { /* On all else fails just refresh the widgets. */
+			} else if (remote_action.equals(RemoteAction_NotifyState)) {
+				onNotifyState();
+			}else { /* On all else fails just refresh the widgets. */
 				onRefreshWidgets();
 			}
 		}
 	}
 
 	private void updateAllWidgets() {
-		final LockScreenState state = new LockScreenState();
-		
-		state.Mode = lockStateManager.getKeyguardEnabledPreference();
-
-		if (state.Mode == Constants.MODE_Enabled) {
-			state.IsLockActive = true;
-		} else {
-			lockStateManager.determineIfLockShouldBeDeactivated(state);
-		}
+		final LockScreenState state = getLockScreenState();
 		
 		if(state.IsLockActive) {
 			enableLockscreen();
@@ -172,7 +167,30 @@ public class DisableKeyguardService extends Service {
 
 	private void onRefreshWidgets() {
 		updateAllWidgets();
+		determineIfShouldDie();
+	}
+
+	private LockScreenState getLockScreenState() {
+		final LockScreenState state = new LockScreenState();
 		
+		state.Mode = lockStateManager.getKeyguardEnabledPreference();
+
+		if (state.Mode == Constants.MODE_Enabled) {
+			state.IsLockActive = true;
+		} else {
+			lockStateManager.determineIfLockShouldBeDeactivated(state);
+		}
+		
+		return state;
+	}
+	
+	private void onNotifyState() {
+		broadcastState(getLockScreenState());
+		determineIfShouldDie();
+		
+	}
+	
+	private void determineIfShouldDie() {
 		// HACK: Sometimes this is called when it shouldn't. Always check to see if the lock is active otherwise quit.
 		if(! _wrapper.isKeyguardDisabled()) {
 			destroyKeyguard();

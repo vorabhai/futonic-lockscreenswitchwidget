@@ -97,7 +97,7 @@ public class LockScreenActivity extends Activity {
 	public void onResume() {
 		super.onResume();
 		registerReceiver(LockState, Intents.broadcastLockStateIntentFilter());
-		startService(Intents.refreshWidgets(this));
+		startService(Intents.getStatus(this));
 	}
 	
 	@Override

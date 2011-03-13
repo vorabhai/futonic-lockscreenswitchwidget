@@ -73,4 +73,12 @@ public class Intents {
 		return intent;
 	}
 
+	public static Intent getStatus(final Context context) {
+		final Intent result = new Intent(context, DisableKeyguardService.class);
+		result.putExtra(DisableKeyguardService.EXTRA_RemoteAction, DisableKeyguardService.RemoteAction_NotifyState);
+		result.putExtra(DisableKeyguardService.EXTRA_ForceNotify, false);
+		
+		return result;
+	}
+
 }
