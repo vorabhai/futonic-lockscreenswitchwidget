@@ -3,7 +3,7 @@
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent">
 	<ImageView android:id="@+id/BackgroundGlowImageView"
-		android:src="@drawable/active_lock_glow"
+		android:src="@drawable/bg_glow_white"
 		android:layout_height="fill_parent"
 		android:layout_width="fill_parent"
 		android:scaleType="fitXY"
