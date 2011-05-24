@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="app_name">Lukitse näytön Switch</string>
-  <string name="widget_label_1x1">Lukitse näytön Switch</string>
-  <string name="service_name">Lukitse näytön käytöstä</string>
-  <string name="lockscreen_is">Lukitse näyttö on</string>
-  <string name="off">poistaminen käytöstä</string>
-  <string name="on">päivänä</string>
-  <string name="lock_screen_is_disabled_while_charging">Automaattinen-käytöstä samalla kantamisen.</string>
+  <string name="app_name">Lukitusnäytön poisto</string>
+  <string name="widget_label_1x1">Lukitusnäytön poisto</string>
+  <string name="service_name">Lukitusnäytön poisto</string>
+  <string name="lockscreen_is">Lukitusnäyttö </string>
+  <string name="off">pois käytöstä</string>
+  <string name="on">käytössä</string>
+  <string name="lock_screen_is_disabled_while_charging">Lukitusnäyttö pois käytöstä akkua ladatessa.</string>
 </resources>
