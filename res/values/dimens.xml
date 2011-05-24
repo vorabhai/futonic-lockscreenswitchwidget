@@ -2,5 +2,5 @@
 <resources>
 	<dimen name="use_weight">0dp</dimen>
 	<dimen name="status_text_size">20sp</dimen>
-	
+	<dimen name="warning_size">64dp</dimen>
 </resources>

@@ -8,7 +8,8 @@
     <string name="select_to_configure">Select to <b>change settings</b>.</string>
     <string name="tap_to_turn_on">Select to <b>re-enable lock screen</b>.</string>
     <string name="preferences">Preferences</string>
-    
+    <string name="unstable_lock_warning"><b>Warning: Notification disabled.</b>\nLock Screen may re-activate randomly.</string>
+
     <string name="PrefCategory_Options">General</string>
     
     <string name="PrefTitle_PrefHideNotification">Hide Notification</string>

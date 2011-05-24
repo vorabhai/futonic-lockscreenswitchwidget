@@ -8,10 +8,18 @@
 		android:layout_width="fill_parent"
 		android:scaleType="fitXY"
 		/>
+	
 	<LinearLayout
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
 		android:orientation="vertical">
+		<TextView android:id="@+id/WarningTextView"
+            android:layout_width="fill_parent" android:layout_height="@dimen/warning_size"
+            style="@style/StatusText"
+            android:text="@string/unstable_lock_warning"
+            android:background="@color/warning"
+            android:textColor="@android:color/black"
+            android:lines="2" />
 		<ImageButton android:id="@+id/ToggleLockButton"
 	  		android:layout_width="fill_parent" android:layout_height="@dimen/use_weight"
 	  		android:layout_weight="70"

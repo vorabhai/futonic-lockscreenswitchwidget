@@ -2,14 +2,17 @@ package com.futonredemption.nokeyguard.activities;
 
 import com.futonredemption.nokeyguard.Constants;
 import com.futonredemption.nokeyguard.Intents;
+import com.futonredemption.nokeyguard.Preferences;
 import com.futonredemption.nokeyguard.R;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
@@ -24,6 +27,7 @@ public class LockScreenActivity extends Activity {
 	public ImageButton ToggleLockButton;
 	public TextView StatusTextView;
 	public Button PreferencesButton;
+	public TextView WarningTextView;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +64,8 @@ public class LockScreenActivity extends Activity {
 			}
 		}
 		);
+		
+		WarningTextView = (TextView)findViewById(R.id.WarningTextView);
 	}
 
 	public final LockStatusReceiver LockState = new LockStatusReceiver();
@@ -96,6 +102,10 @@ public class LockScreenActivity extends Activity {
 	@Override
 	public void onResume() {
 		super.onResume();
+		
+		toggleShowWarning();
+		
+		
 		registerReceiver(LockState, Intents.broadcastLockStateIntentFilter());
 		startService(Intents.getStatus(this));
 	}
@@ -104,5 +114,15 @@ public class LockScreenActivity extends Activity {
 	public void onPause() {
 		super.onPause();
 		unregisterReceiver(LockState);
+	}
+	
+	private void toggleShowWarning() {
+		final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+		boolean hideNotification = preferences.getBoolean(Preferences.General.HideNotification, false);
+		if(hideNotification) {
+			WarningTextView.setVisibility(View.VISIBLE);
+		} else  {
+			WarningTextView.setVisibility(View.GONE);
+		}
 	}
 }
