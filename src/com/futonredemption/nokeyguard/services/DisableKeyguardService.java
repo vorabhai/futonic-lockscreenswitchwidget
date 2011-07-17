@@ -72,24 +72,29 @@ public class DisableKeyguardService extends Service {
 
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		handleCommand(intent);
-		return START_REDELIVER_INTENT;
+		return START_STICKY;
 	}
 
 	private void handleCommand(final Intent intent) {
 		synchronized (_commandLock) {
-			final String remote_action = intent.getStringExtra(EXTRA_RemoteAction);
 			
-			// Backwards compatibility. If the old "disable on charging" preference is set then put it to enable keyguard.
-			if (remote_action.equals(RemoteAction_EnableKeyguard) || remote_action.equals(RemoteAction_DisableKeyguardOnCharging)) {
-				onEnableKeyguard();
-			} else if (remote_action.equals(RemoteAction_DisableKeyguard)) {
+			if(intent != null) {
+				final String remote_action = intent.getStringExtra(EXTRA_RemoteAction);
+				
+				// Backwards compatibility. If the old "disable on charging" preference is set then put it to enable keyguard.
+				if (remote_action.equals(RemoteAction_EnableKeyguard) || remote_action.equals(RemoteAction_DisableKeyguardOnCharging)) {
+					onEnableKeyguard();
+				} else if (remote_action.equals(RemoteAction_DisableKeyguard)) {
+					onDisableKeyguard();
+				} else if (remote_action.equals(RemoteAction_RefreshWidgets)) {
+					onRefreshWidgets();
+				} else if (remote_action.equals(RemoteAction_NotifyState)) {
+					onNotifyState();
+				}else { /* On all else fails just refresh the widgets. */
+					onRefreshWidgets();
+				}
+			} else {
 				onDisableKeyguard();
-			} else if (remote_action.equals(RemoteAction_RefreshWidgets)) {
-				onRefreshWidgets();
-			} else if (remote_action.equals(RemoteAction_NotifyState)) {
-				onNotifyState();
-			}else { /* On all else fails just refresh the widgets. */
-				onRefreshWidgets();
 			}
 		}
 	}
