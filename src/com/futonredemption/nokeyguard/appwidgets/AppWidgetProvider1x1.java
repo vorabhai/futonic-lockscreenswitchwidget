@@ -81,6 +81,7 @@ public class AppWidgetProvider1x1 extends AppWidgetProvider {
 			iconId = R.drawable.ic_appwidget_screenlock_off;
 		}
 
+		views.setOnClickPendingIntent(R.id.main, toggleIntent);
 		views.setOnClickPendingIntent(R.id.imgKeyguard, toggleIntent);
 		views.setOnClickPendingIntent(R.id.indKeyguard, Intents.pendingShowPreferencesActivity(context));
 		views.setImageViewResource(R.id.imgKeyguard, iconId);

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:id="@+id/main" android:layout_width="fill_parent"
-	android:layout_height="fill_parent" android:gravity="center"
-	android:background="@drawable/appwidget_bg">
+	android:id="@+id/main"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	style="@style/WidgetBackground">
 
 	<LinearLayout android:id="@+id/btnKeyguard"
 		android:layout_width="0dip" android:layout_weight="1"
@@ -16,7 +16,7 @@
 			android:clickable="true" android:focusable="true" />
 
 		<ImageView android:id="@+id/indKeyguard"
-			android:background="@drawable/awbtn_bottom"
+			android:background="@drawable/appwidget_button_bottom"
 			android:layout_width="fill_parent" android:layout_height="wrap_content"
 			android:clickable="true" android:focusable="true"
 			android:scaleType="fitXY" />

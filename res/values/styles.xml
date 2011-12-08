@@ -5,4 +5,9 @@
         <item name="android:textSize">@dimen/status_text_size</item>
         <item name="android:gravity">center</item>
     </style>
+    <style name="WidgetBackground">
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/appwidget_dark_bg_clickable</item>
+        <item name="android:layout_margin">@dimen/widget_margin</item>
+    </style>
 </resources>

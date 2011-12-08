@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<!-- 
+		AppWidget Dimensions
+		Based on the formula 70 * n - 30
+		Reference: http://developer.android.com/guide/practices/ui_guidelines/widget_design.html#design
+	-->
+	<dimen name="AppWidget_1Cell">40dp</dimen>
+	<dimen name="AppWidget_2Cell">110dp</dimen>
+	<dimen name="AppWidget_3Cell">180dp</dimen>
+	<dimen name="AppWidget_4Cell">250dp</dimen>
+	<dimen name="AppWidget_5Cell">320dp</dimen>
+	<dimen name="AppWidget_6Cell">390dp</dimen>
+	<dimen name="AppWidget_7Cell">460dp</dimen>
+	<dimen name="AppWidget_8Cell">530dp</dimen>
+	<dimen name="AppWidget_9Cell">600dp</dimen>
+	<dimen name="AppWidget_10Cell">670dp</dimen>
+	<dimen name="AppWidget_11Cell">740dp</dimen>
+	<dimen name="AppWidget_12Cell">810dp</dimen>
+	<dimen name="AppWidget_Smallest">@dimen/AppWidget_1Cell</dimen>
+	<dimen name="AppWidget_Largest">@dimen/AppWidget_4Cell</dimen>
+	<dimen name="AppWidget_FullScreenWidth">@dimen/AppWidget_4Cell</dimen>
+	<dimen name="AppWidget_FullScreenHeight">@dimen/AppWidget_4Cell</dimen>
+	
+	<dimen name="widget_margin">0dp</dimen>
+</resources>
