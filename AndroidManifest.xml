@@ -24,17 +24,22 @@
             android:label="@string/activity_preferences"
             android:launchMode="singleTop"
             android:name=".activities.NoKeyguardPreferenceActivity" android:noHistory="true" />
-            
+        
+        <receiver android:enabled="true" android:name=".receivers.PowerStateChangedReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
+            </intent-filter>
+        </receiver>
+        
         <receiver android:enabled="true" android:exported="true"
             android:label="@string/widget_label_1x1" android:name=".appwidgets.AppWidgetProvider1x1">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
-                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
             </intent-filter>
             <meta-data android:name="android.appwidget.provider" android:resource="@xml/appwidget_1x1" />
         </receiver>
-        <service android:enabled="true" android:exported="true"
+        <service android:enabled="true"
             android:label="@string/service_name" android:name=".services.DisableKeyguardService" />
     </application>
 </manifest>
