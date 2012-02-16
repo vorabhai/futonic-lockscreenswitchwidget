@@ -7,7 +7,7 @@
 
     <ImageView android:id="@+id/indKeyguard"
 			android:background="@drawable/appwidget_button_bottom"
-			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:layout_width="match_parent" android:layout_height="wrap_content"
 			android:layout_alignParentBottom="true" android:layout_alignParentRight="true" android:layout_alignParentLeft="true"
 			android:clickable="true" android:focusable="true"
 			android:scaleType="fitXY"

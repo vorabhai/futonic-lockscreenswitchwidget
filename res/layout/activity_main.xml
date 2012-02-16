@@ -24,19 +24,19 @@
             android:textColor="@android:color/black"
             android:lines="2" />
 		<ImageButton android:id="@+id/ToggleLockButton"
-	  		android:layout_width="fill_parent" android:layout_height="@dimen/use_weight"
+	  		android:layout_width="fill_parent" android:layout_height="0dp"
 	  		android:layout_weight="70"
 	  		android:background="@android:color/transparent"
 	  		android:src="@drawable/active_lock"
 	  		android:scaleType="centerInside"
 	  		android:contentDescription="@string/toggle_lockscreen" />
 	  	<TextView android:id="@+id/StatusTextView"
-	  		android:layout_width="fill_parent" android:layout_height="@dimen/use_weight"
+	  		android:layout_width="fill_parent" android:layout_height="0dp"
 	  		android:layout_weight="15"
 	  		style="@style/StatusText"
 	  		android:text="@string/app_name" />
 	  	<Button android:id="@+id/PreferencesButton"
-	  		android:layout_width="fill_parent" android:layout_height="@dimen/use_weight"
+	  		android:layout_width="fill_parent" android:layout_height="0dp"
 	  		android:layout_weight="15" 
 	  		android:text="@string/preferences"
 	  		android:gravity="center" />
