@@ -1,8 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<resources>
-  <string name="app_name">Switch de ecran de blocare</string>
-  <string name="widget_label_1x1">Switch de ecran de blocare</string>
-  <string name="service_name">Dezactivare ecran de blocare</string>
-  <string name="lockscreen_is">Blocare ecran este</string>
-  <string name="on">pe</string>
-</resources>

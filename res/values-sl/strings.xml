@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<resources>
-  <string name="app_name">Zaklepanje zaslon preklopi</string>
-  <string name="widget_label_1x1">Zaklepanje zaslon preklopi</string>
-  <string name="service_name">Zaklepanje ekran onemogoči</string>
-  <string name="lockscreen_is">Zaklepanje zaslon je</string>
-  <string name="off">izklop</string>
-  <string name="on">na</string>
-</resources>

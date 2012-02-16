@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<resources>
-  <string name="app_name">Kunci Screen Switch</string>
-  <string name="widget_label_1x1">Kunci Screen Switch</string>
-  <string name="service_name">Nonaktifkan Screen kunci</string>
-  <string name="lockscreen_is">Kunci Screen adalah</string>
-  <string name="off">dari</string>
-  <string name="on">pada</string>
-</resources>

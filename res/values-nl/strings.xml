@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<resources>
-  <string name="service_name">Lock Screen uitschakelen</string>
-  <string name="lockscreen_is">Slot scherm is</string>
-  <string name="off">uit</string>
-  <string name="on">op</string>
-</resources>

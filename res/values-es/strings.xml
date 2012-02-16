@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<resources>
-  <string name="app_name">Conmutador de pantalla de bloqueo</string>
-  <string name="widget_label_1x1">Conmutador de pantalla de bloqueo</string>
-  <string name="service_name">Bloqueo de pantalla desactivar</string>
-  <string name="lockscreen_is">Pantalla de bloqueo es</string>
-  <string name="off">desactivar</string>
-  <string name="on">en</string>
-</resources>

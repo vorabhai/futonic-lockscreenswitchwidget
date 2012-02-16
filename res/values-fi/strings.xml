@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<resources>
-  <string name="app_name">Lukitusnäytön poisto</string>
-  <string name="widget_label_1x1">Lukitusnäytön poisto</string>
-  <string name="service_name">Lukitusnäytön poisto</string>
-  <string name="lockscreen_is">Lukitusnäyttö </string>
-  <string name="off">pois käytöstä</string>
-  <string name="on">käytössä</string>
-</resources>

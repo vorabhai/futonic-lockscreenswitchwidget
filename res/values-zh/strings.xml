@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<resources>
-  <string name="app_name">锁定屏幕开关</string>
-  <string name="widget_label_1x1">锁定屏幕开关</string>
-  <string name="service_name">禁用屏幕锁定</string>
-  <string name="lockscreen_is">锁定屏幕是</string>
-  <string name="off">关闭</string>
-  <string name="on">关于</string>
-</resources>

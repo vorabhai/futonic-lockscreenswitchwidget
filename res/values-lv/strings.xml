@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<resources>
-  <string name="service_name">Lock Screen atspējošana</string>
-  <string name="lockscreen_is">Bloķēšanas režīms ir</string>
-  <string name="off">izslēgts</string>
-  <string name="on">par</string>
-</resources>

@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<resources>
-  <string name="app_name">Κλείδωμα οθόνης Switch</string>
-  <string name="widget_label_1x1">Κλείδωμα οθόνης Switch</string>
-  <string name="service_name">Κλείδωμα οθόνης απενεργοποίηση</string>
-  <string name="lockscreen_is">Κλείδωμα οθόνης είναι</string>
-  <string name="off">Απενεργοποίηση</string>
-  <string name="on">σχετικά</string>
-</resources>

@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<resources>
-  <string name="app_name">잠금 화면 전환</string>
-  <string name="widget_label_1x1">잠금 화면 전환</string>
-  <string name="service_name">잠금 화면 사용 안 함</string>
-  <string name="lockscreen_is">잠금 화면입니다.</string>
-  <string name="off">해제</string>
-  <string name="on">에</string>
-</resources>

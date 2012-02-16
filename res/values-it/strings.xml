@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<resources>
-  <string name="app_name">Interruttore blocco schermo</string>
-  <string name="widget_label_1x1">Interruttore blocco schermo</string>
-  <string name="service_name">Disabilita blocco schermo</string>
-  <string name="lockscreen_is">Blocco schermo</string>
-  <string name="off">disabilitato</string>
-  <string name="on">abilitato</string>
-</resources>

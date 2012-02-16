@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<resources>
-  <string name="app_name">تأمين الشاشة تبديل</string>
-  <string name="widget_label_1x1">تأمين الشاشة تبديل</string>
-  <string name="service_name">تعطيل شاشة تأمين</string>
-  <string name="lockscreen_is">يتم تأمين الشاشة</string>
-  <string name="off">إيقاف تشغيل</string>
-  <string name="on">على</string>
-</resources>
