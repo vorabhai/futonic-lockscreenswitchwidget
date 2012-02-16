@@ -33,7 +33,7 @@
 	  		android:layout_width="fill_parent" android:layout_height="@dimen/use_weight"
 	  		android:layout_weight="15"
 	  		style="@style/StatusText"
-	  		android:text="Loading..." />
+	  		android:text="@string/app_name" />
 	  	<Button android:id="@+id/PreferencesButton"
 	  		android:layout_width="fill_parent" android:layout_height="@dimen/use_weight"
 	  		android:layout_weight="15" 

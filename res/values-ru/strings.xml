@@ -24,7 +24,7 @@
     <string name="PrefTitle_PrefActivateOnlyWhenDocked">Отключать в докстанции</string>
     <string name="PrefDesc_PrefActivateOnlyWhenDocked">Экран блокировки не выводится при нахождении докстанции.</string>
     
-    <string name="PrefCategory_PreventActivationOn">Не разблокировать по...</string>
+    <string name="PrefCategory_PreventActivationOn">Не разблокировать по&#8230;</string>
 
 	<string name="PrefTitle_PreventActivationOnCameraButton">Кнопке \'Камера\'</string>
     <string name="PrefDesc_PreventActivationOnCameraButton">Не разблокировать по кнопке Камера.</string>

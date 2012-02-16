@@ -13,6 +13,7 @@ import android.content.SharedPreferences;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.Menu;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
@@ -104,8 +105,7 @@ public class LockScreenActivity extends Activity {
 		super.onResume();
 		
 		toggleShowWarning();
-		
-		
+
 		registerReceiver(LockState, Intents.broadcastLockStateIntentFilter());
 		startService(Intents.getStatus(this));
 	}
@@ -124,5 +124,11 @@ public class LockScreenActivity extends Activity {
 		} else  {
 			WarningTextView.setVisibility(View.GONE);
 		}
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.actionbar_main, menu);
+		return super.onCreateOptionsMenu(menu);
 	}
 }

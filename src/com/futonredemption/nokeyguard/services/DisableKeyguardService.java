@@ -146,7 +146,7 @@ public class DisableKeyguardService extends Service {
 		if(! foregrounder.isForegrounded()) {
 			
 			foregrounder.startForeground(
-					R.drawable.stat_icon,
+					R.drawable.ic_stat_nolock,
 					R.string.lockscreen_is_off,
 					R.string.select_to_configure,
 					R.string.lockscreen_is_off,
@@ -158,7 +158,7 @@ public class DisableKeyguardService extends Service {
 			foregrounder.beginRemoveForeground();
 		} else {
 			foregrounder.beginChangeAction(
-					R.drawable.stat_icon,
+					R.drawable.ic_stat_nolock,
 					R.string.lockscreen_is_off,
 					R.string.tap_to_turn_on,
 					R.string.lockscreen_is_off,
