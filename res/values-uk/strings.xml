@@ -6,5 +6,4 @@
   <string name="lockscreen_is">Блокування екрану є</string>
   <string name="off">Вимкнення</string>
   <string name="on">на</string>
-  <string name="lock_screen_is_disabled_while_charging">Авто відключення під час зарядки.</string>
 </resources>

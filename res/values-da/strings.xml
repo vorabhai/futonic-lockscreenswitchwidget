@@ -6,5 +6,4 @@
   <string name="lockscreen_is">Lås skærm er</string>
   <string name="off">slukket</string>
   <string name="on">på</string>
-  <string name="lock_screen_is_disabled_while_charging">Auto-Deaktiver samtidig opladning.</string>
 </resources>

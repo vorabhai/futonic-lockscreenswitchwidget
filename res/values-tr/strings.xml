@@ -6,5 +6,4 @@
   <string name="lockscreen_is">Kilit perde olduğunu</string>
   <string name="off">kapalı</string>
   <string name="on">Tarih</string>
-  <string name="lock_screen_is_disabled_while_charging">Auto-sakatlar süre şarj.</string>
 </resources>

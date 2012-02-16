@@ -6,5 +6,4 @@
   <string name="lockscreen_is">鎖定螢幕是</string>
   <string name="off">關閉</string>
   <string name="on">關於</string>
-  <string name="lock_screen_is_disabled_while_charging">自動禁用充電。</string>
 </resources>

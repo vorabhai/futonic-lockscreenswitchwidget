@@ -6,5 +6,4 @@
   <string name="lockscreen_is">Κλείδωμα οθόνης είναι</string>
   <string name="off">Απενεργοποίηση</string>
   <string name="on">σχετικά</string>
-  <string name="lock_screen_is_disabled_while_charging">Auto-απενεργοποίηση ενώ χρέωσης.</string>
 </resources>

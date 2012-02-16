@@ -10,7 +10,10 @@
     <string name="preferences">Preferences</string>
     <string name="security_settings">Security Setup</string>
     <string name="unstable_lock_warning"><b>Warning: Notification disabled.</b>\nLock Screen may re-activate randomly.</string>
-
+	<string name="no_description"></string>
+	<string name="toggle_lockscreen">Toggle Lock Screen</string>
+    <string name="lockscreen_indicator">Lock Screen Indicator</string>
+    <string name="option_not_supported">Feature is not supported on your device.</string>
     <string name="PrefCategory_Options">General</string>
     
     <string name="PrefTitle_PrefHideNotification">Hide Notification</string>
@@ -20,7 +23,7 @@
     
     <string name="PrefTitle_PrefActivateOnlyWhenCharging">Only When Charging</string>
     <string name="PrefDesc_PrefActivateOnlyWhenCharging">Only disables the lock screen when charging.</string>
-    
+    <!-- 
     <string name="PrefTitle_PrefActivateOnlyWhenHeadphonesPluggedIn">Only When Headphones Plugged In</string>
     <string name="PrefDesc_PrefActivateOnlyWhenHeadphonesPluggedIn">Disable lock screen when headphones are plugged in.</string>
     
@@ -34,5 +37,5 @@
     
     <string name="PrefTitle_PreventActivationOnCallButton">Phone Button</string>
     <string name="PrefDesc_PreventActivationOnCallButton">Don\'t unlock when call/phone button is pressed.</string>
-    
+     -->
 </resources>

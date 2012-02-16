@@ -6,5 +6,4 @@
   <string name="lockscreen_is">Lukitusnäyttö </string>
   <string name="off">pois käytöstä</string>
   <string name="on">käytössä</string>
-  <string name="lock_screen_is_disabled_while_charging">Lukitusnäyttö pois käytöstä akkua ladatessa.</string>
 </resources>

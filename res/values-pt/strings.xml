@@ -5,5 +5,4 @@
   <string name="service_name">Bloqueio de tela Disable</string>
   <string name="lockscreen_is">Bloqueio de tela é</string>
   <string name="on">em</string>
-  <string name="lock_screen_is_disabled_while_charging">Auto-disable durante o carregamento.</string>
 </resources>

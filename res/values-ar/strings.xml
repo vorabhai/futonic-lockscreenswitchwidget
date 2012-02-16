@@ -6,5 +6,4 @@
   <string name="lockscreen_is">يتم تأمين الشاشة</string>
   <string name="off">إيقاف تشغيل</string>
   <string name="on">على</string>
-  <string name="lock_screen_is_disabled_while_charging">تعطيل تلقائي أثناء الشحن.</string>
 </resources>

@@ -6,5 +6,4 @@
   <string name="lockscreen_is">Khóa Screen là</string>
   <string name="off">tắt</string>
   <string name="on">ngày</string>
-  <string name="lock_screen_is_disabled_while_charging">Tự động tắt trong khi sạc.</string>
 </resources>

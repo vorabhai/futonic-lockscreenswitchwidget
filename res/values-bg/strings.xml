@@ -6,5 +6,4 @@
   <string name="lockscreen_is">Заключване на екрана е</string>
   <string name="off">изключване</string>
   <string name="on">относно</string>
-  <string name="lock_screen_is_disabled_while_charging">Авто-забрани при зареждане.</string>
 </resources>

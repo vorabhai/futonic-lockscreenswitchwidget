@@ -6,5 +6,4 @@
   <string name="lockscreen_is">Spynos ekrano yra</string>
   <string name="off">išjungti</string>
   <string name="on">dėl</string>
-  <string name="lock_screen_is_disabled_while_charging">Automatinis išjungimas o apmokestinimo.</string>
 </resources>

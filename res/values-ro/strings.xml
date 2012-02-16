@@ -5,5 +5,4 @@
   <string name="service_name">Dezactivare ecran de blocare</string>
   <string name="lockscreen_is">Blocare ecran este</string>
   <string name="on">pe</string>
-  <string name="lock_screen_is_disabled_while_charging">Auto-Dezactivare în timp ce de tarifare.</string>
 </resources>

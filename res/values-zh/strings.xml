@@ -6,5 +6,4 @@
   <string name="lockscreen_is">锁定屏幕是</string>
   <string name="off">关闭</string>
   <string name="on">关于</string>
-  <string name="lock_screen_is_disabled_while_charging">自动禁用充电。</string>
 </resources>

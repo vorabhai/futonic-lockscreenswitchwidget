@@ -6,5 +6,4 @@
   <string name="lockscreen_is">Blocco schermo</string>
   <string name="off">disabilitato</string>
   <string name="on">abilitato</string>
-  <string name="lock_screen_is_disabled_while_charging">Disabilitazione automatica in ricarica.</string>
 </resources>

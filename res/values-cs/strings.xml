@@ -6,5 +6,4 @@
   <string name="lockscreen_is">Zámek obrazovky je</string>
   <string name="off">vypnutí</string>
   <string name="on">na</string>
-  <string name="lock_screen_is_disabled_while_charging">Automatické vypnutí při nabíjení.</string>
 </resources>

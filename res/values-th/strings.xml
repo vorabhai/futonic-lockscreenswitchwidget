@@ -6,5 +6,4 @@
   <string name="lockscreen_is">ล็อกหน้าจอเป็น</string>
   <string name="off">ปิด</string>
   <string name="on">บน</string>
-  <string name="lock_screen_is_disabled_while_charging">ปิดการใช้ auto-งานในขณะที่ชาร์จไฟ</string>
 </resources>

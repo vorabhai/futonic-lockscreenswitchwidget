@@ -6,5 +6,4 @@
   <string name="lockscreen_is">Lukusta täisekraani on</string>
   <string name="off">välja</string>
   <string name="on">kohta</string>
-  <string name="lock_screen_is_disabled_while_charging">Automaatne-keelake laadimise ajal.</string>
 </resources>

@@ -6,5 +6,4 @@
   <string name="lockscreen_is">ロック画面です。</string>
   <string name="off">オフ</string>
   <string name="on">上</string>
-  <string name="lock_screen_is_disabled_while_charging">自動が無効な充電中。</string>
 </resources>

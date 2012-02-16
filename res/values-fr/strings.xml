@@ -5,5 +5,4 @@
   <string name="service_name">Verrou écran disable</string>
   <string name="lockscreen_is">Écran de verrouillage est</string>
   <string name="on">sur</string>
-  <string name="lock_screen_is_disabled_while_charging">Autobloquantes tout en charge.</string>
 </resources>

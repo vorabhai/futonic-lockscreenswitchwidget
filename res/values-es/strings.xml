@@ -6,5 +6,4 @@
   <string name="lockscreen_is">Pantalla de bloqueo es</string>
   <string name="off">desactivar</string>
   <string name="on">en</string>
-  <string name="lock_screen_is_disabled_while_charging">Auto-disable durante la carga.</string>
 </resources>

@@ -4,5 +4,4 @@
   <string name="lockscreen_is">Bloķēšanas režīms ir</string>
   <string name="off">izslēgts</string>
   <string name="on">par</string>
-  <string name="lock_screen_is_disabled_while_charging">Auto-atspējot lādēšanas laikā.</string>
 </resources>

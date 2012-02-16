@@ -6,5 +6,4 @@
   <string name="lockscreen_is">Zár képernyő van</string>
   <string name="off">kikapcsolása</string>
   <string name="on">a</string>
-  <string name="lock_screen_is_disabled_while_charging">Automatikus letiltása a töltés közben.</string>
 </resources>

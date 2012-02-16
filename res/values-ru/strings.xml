@@ -17,7 +17,7 @@
     
     <string name="PrefTitle_PrefActivateOnlyWhenCharging">Отключать во время зарядки</string>
     <string name="PrefDesc_PrefActivateOnlyWhenCharging">Экран блокировки не выводится во время зарядки</string>
-    
+    <!-- 
     <string name="PrefTitle_PrefActivateOnlyWhenHeadphonesPluggedIn">Отключать при подключенной гарнитурой</string>
     <string name="PrefDesc_PrefActivateOnlyWhenHeadphonesPluggedIn">Экран блокировки не выводится при подключенной гарнитуре.</string>
     
@@ -31,5 +31,5 @@
     
     <string name="PrefTitle_PreventActivationOnCallButton">Кнопке \'Вызов\'</string>
     <string name="PrefDesc_PreventActivationOnCallButton">Не разблокировать по кнопке \'Вызов\'.</string>
-    
+     -->
 </resources>

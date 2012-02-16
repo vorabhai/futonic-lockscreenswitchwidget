@@ -7,8 +7,17 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.provider.Settings;
 
 public class Intents {
+	
+	public static final Intent securitySettings() {
+		final Intent result = new Intent(Settings.ACTION_SECURITY_SETTINGS);
+		result.setFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+
+		return result;
+	}
+	
 	public static final Intent disableKeyguard(final Context context) {
 		final Intent result = new Intent(context, DisableKeyguardService.class);
 		result.putExtra(DisableKeyguardService.EXTRA_RemoteAction, DisableKeyguardService.RemoteAction_DisableKeyguard);
@@ -41,6 +50,7 @@ public class Intents {
 	
 	public static final Intent showPreferencesActivity(final Context context) {
 		final Intent result = new Intent(context, NoKeyguardPreferenceActivity.class);
+		result.setFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
 		return result;
 	}
 	
