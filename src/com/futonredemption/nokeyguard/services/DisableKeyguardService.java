@@ -1,5 +1,10 @@
 package com.futonredemption.nokeyguard.services;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
+import org.beryl.app.ComponentEnabler;
+import org.beryl.app.ServiceBase;
+
 import com.futonredemption.nokeyguard.AutoCancelingForegrounder;
 import com.futonredemption.nokeyguard.Constants;
 import com.futonredemption.nokeyguard.Intents;
@@ -7,14 +12,18 @@ import com.futonredemption.nokeyguard.KeyguardLockWrapper;
 import com.futonredemption.nokeyguard.LockScreenState;
 import com.futonredemption.nokeyguard.LockScreenStateManager;
 import com.futonredemption.nokeyguard.R;
+import com.futonredemption.nokeyguard.activities.HiddenActivity;
 import com.futonredemption.nokeyguard.appwidgets.AppWidgetProvider1x1;
+import com.futonredemption.nokeyguard.receivers.PowerStateChangedReceiver;
 import com.futonredemption.nokeyguard.receivers.RelayRefreshWidgetReceiver;
 
-import android.app.Service;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.IBinder;
 
-public class DisableKeyguardService extends Service {
+public class DisableKeyguardService extends ServiceBase {
 	private Object _commandLock = new Object();
 
 	private KeyguardLockWrapper _wrapper;
@@ -33,13 +42,36 @@ public class DisableKeyguardService extends Service {
 	
 	private final AutoCancelingForegrounder foregrounder = new AutoCancelingForegrounder(this);
 	private final LockScreenStateManager lockStateManager = new LockScreenStateManager(this);
+	private final RaiseProcessPriorityWhenSleeping processPriorityRaiserOnSleep = new RaiseProcessPriorityWhenSleeping();
 	
 
+	class RaiseProcessPriorityWhenSleeping extends BroadcastReceiver {
+
+		AtomicBoolean isRegistered = new AtomicBoolean(false);
+		
+		public void register() {
+			if(! isRegistered.getAndSet(true)) {
+				final IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_OFF);
+				DisableKeyguardService.this.registerReceiver(this, filter);
+			}
+		}
+		
+		public void unregister() {
+			DisableKeyguardService.this.unregisterReceiver(this);
+			isRegistered.set(false);
+		}
+		
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			HiddenActivity.launch(DisableKeyguardService.this);
+		}
+	}
+	
 	@Override
 	public void onCreate() {
 		super.onCreate();
 		
-		//RelayRefreshWidgetReceiver.startReceiver(this, receiver);
+		processPriorityRaiserOnSleep.register();
 		_wrapper = new KeyguardLockWrapper(this, KeyGuardTag);
 	}
 
@@ -47,15 +79,9 @@ public class DisableKeyguardService extends Service {
 	public void onDestroy() {
 		super.onDestroy();
 
+		processPriorityRaiserOnSleep.unregister();
 		foregrounder.stopForeground();
-		//RelayRefreshWidgetReceiver.stopReceiver(this, receiver);
 		_wrapper.dispose();
-	}
-
-	@Override
-	public void onLowMemory() {
-		super.onLowMemory();
-		// Really, really hope that nothing bad happens.
 	}
 
 	@Override
@@ -64,17 +90,11 @@ public class DisableKeyguardService extends Service {
 	}
 
 	@Override
-	public void onStart(final Intent intent, final int startId) {
-		super.onStart(intent, startId);
-
-		handleCommand(intent);
-	}
-
-	public int onStartCommand(Intent intent, int flags, int startId) {
+	protected int handleOnStartCommand(Intent intent, int flags, int startId) {
 		handleCommand(intent);
 		return START_STICKY;
 	}
-
+	
 	private void handleCommand(final Intent intent) {
 		synchronized (_commandLock) {
 			
@@ -171,8 +191,19 @@ public class DisableKeyguardService extends Service {
 	}
 
 	private void onRefreshWidgets() {
+		toggleComponents();
 		updateAllWidgets();
 		determineIfShouldDie();
+	}
+
+	private void toggleComponents() {
+		final ComponentEnabler enabler = new ComponentEnabler(this);
+		
+		if(lockStateManager.isListeningToPowerChanges()) {
+			enabler.enable(PowerStateChangedReceiver.class);
+		} else {
+			enabler.disable(PowerStateChangedReceiver.class);
+		}
 	}
 
 	private LockScreenState getLockScreenState() {
@@ -216,5 +247,10 @@ public class DisableKeyguardService extends Service {
 	private void destroyKeyguard() {
 		_wrapper.dispose();
 		this.stopSelf();
+	}
+
+	@Override
+	protected String getTag() {
+		return DisableKeyguardService.class.getName();
 	}
 }

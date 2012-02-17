@@ -26,6 +26,12 @@
             android:theme="@style/Klondike"
             android:name="com.futonredemption.nokeyguard.activities.NoKeyguardPreferenceActivity" android:noHistory="true" />
         
+        <activity android:name="com.futonredemption.nokeyguard.activities.HiddenActivity"
+                  android:theme="@android:style/Theme.Translucent.NoTitleBar"
+                  android:launchMode="singleTop"
+                  android:noHistory="true"
+                  android:excludeFromRecents="true" />
+        
         <receiver android:enabled="false" android:name=".receivers.PowerStateChangedReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />

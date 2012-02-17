@@ -16,9 +16,7 @@ public class LockScreenStateManager {
 	}
 
 	public void determineIfLockShouldBeDeactivated(final LockScreenState state) {
-		final SharedPreferences prefs = getPreferences();
-		
-		boolean prefActivateOnlyWhenCharging = prefs.getBoolean("PrefActivateOnlyWhenCharging", false);
+		boolean prefActivateOnlyWhenCharging = isListeningToPowerChanges();
 		boolean prefActivateOnlyWhenHeadphonesPluggedIn = false; //prefs.getBoolean("PrefActivateOnlyWhenHeadphonesPluggedIn", false);
 		boolean prefActivateOnlyWhenDocked = false; //prefs.getBoolean("PrefActivateOnlyWhenDocked", false);
 		
@@ -86,5 +84,10 @@ public class LockScreenStateManager {
 		}
 		
 		return prefs;
+	}
+
+	public boolean isListeningToPowerChanges() {
+		final SharedPreferences prefs = getPreferences();
+		return prefs.getBoolean("PrefActivateOnlyWhenCharging", false);
 	}
 }

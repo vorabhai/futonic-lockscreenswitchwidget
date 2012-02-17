@@ -4,6 +4,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import org.beryl.app.ServiceForegrounder;
+import org.beryl.diagnostics.Logger;
 
 import android.app.PendingIntent;
 import android.app.Service;
@@ -33,12 +34,14 @@ public class AutoCancelingForegrounder {
 	
 	public void startForeground(int resIconId, int title, int description, int tickerText, PendingIntent onClickIntent) {
 		synchronized (foregrounder) {
+			Logger.e("START foregrounding");
 			foregrounder.startForeground(resIconId, title, description, tickerText, onClickIntent);
 		}
 	}
 	
 	public void stopForeground() {
 		synchronized(foregrounder) {
+			Logger.e("stop foregrounding");
 			foregrounder.stopForeground();
 		}
 	}
