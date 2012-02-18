@@ -1,7 +1,5 @@
 package com.futonredemption.nokeyguard.services;
 
-import java.util.concurrent.atomic.AtomicBoolean;
-
 import org.beryl.app.ComponentEnabler;
 import org.beryl.app.ServiceBase;
 
@@ -12,15 +10,11 @@ import com.futonredemption.nokeyguard.KeyguardLockWrapper;
 import com.futonredemption.nokeyguard.LockScreenState;
 import com.futonredemption.nokeyguard.LockScreenStateManager;
 import com.futonredemption.nokeyguard.R;
-import com.futonredemption.nokeyguard.activities.HiddenActivity;
 import com.futonredemption.nokeyguard.appwidgets.AppWidgetProvider1x1;
 import com.futonredemption.nokeyguard.receivers.PowerStateChangedReceiver;
 import com.futonredemption.nokeyguard.receivers.RelayRefreshWidgetReceiver;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.IBinder;
 
 public class DisableKeyguardService extends ServiceBase {
@@ -42,36 +36,11 @@ public class DisableKeyguardService extends ServiceBase {
 	
 	private final AutoCancelingForegrounder foregrounder = new AutoCancelingForegrounder(this);
 	private final LockScreenStateManager lockStateManager = new LockScreenStateManager(this);
-	private final RaiseProcessPriorityWhenSleeping processPriorityRaiserOnSleep = new RaiseProcessPriorityWhenSleeping();
-	
-
-	class RaiseProcessPriorityWhenSleeping extends BroadcastReceiver {
-
-		AtomicBoolean isRegistered = new AtomicBoolean(false);
-		
-		public void register() {
-			if(! isRegistered.getAndSet(true)) {
-				final IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_OFF);
-				DisableKeyguardService.this.registerReceiver(this, filter);
-			}
-		}
-		
-		public void unregister() {
-			DisableKeyguardService.this.unregisterReceiver(this);
-			isRegistered.set(false);
-		}
-		
-		@Override
-		public void onReceive(Context context, Intent intent) {
-			HiddenActivity.launch(DisableKeyguardService.this);
-		}
-	}
 	
 	@Override
 	public void onCreate() {
 		super.onCreate();
 		
-		processPriorityRaiserOnSleep.register();
 		_wrapper = new KeyguardLockWrapper(this, KeyGuardTag);
 	}
 
@@ -79,7 +48,6 @@ public class DisableKeyguardService extends ServiceBase {
 	public void onDestroy() {
 		super.onDestroy();
 
-		processPriorityRaiserOnSleep.unregister();
 		foregrounder.stopForeground();
 		_wrapper.dispose();
 	}
